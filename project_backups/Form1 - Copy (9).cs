@@ -153,6 +153,11 @@ namespace WindowsFormsApp1
                 saveTable(saveFileDialog.FileName);
         }
 
+        private void get_hours_normal_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show(getTotalHours(elements, 0));
+        }
+
         private void browse_Click(object sender, EventArgs e)
         {
             OpenFileDialog openFileDialog;
@@ -177,11 +182,6 @@ namespace WindowsFormsApp1
                 textBox4.Text = openFileDialog.FileName;
                 get_hours_custom.Enabled = true;
             }
-        }
-
-        private void get_hours_normal_Click(object sender, EventArgs e)
-        {
-            MessageBox.Show(getTotalHours(elements, 0));
         }
 
         private void enter_get_hours_custom_Click(object sender, EventArgs e)
@@ -279,7 +279,7 @@ namespace WindowsFormsApp1
             double sum = 0;
             int i;
 
-            for (i = 0; i < f_elements.Count; i++)
+            for (i = 0; i < elements.Count; i++)
             {
                 switch (x)
                 {
@@ -299,7 +299,7 @@ namespace WindowsFormsApp1
                         result = DateTime.Parse("00:00");
                         break;
                 }
-                sum += (result - tmp).TotalHours;
+            sum += (result - tmp).TotalHours;
             }
 
             return transformHour(sum);
