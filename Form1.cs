@@ -324,7 +324,6 @@ namespace WindowsFormsApp1
 
         private void saveTable(string path)
         {
-
             if (init)
             {
                 Table table_main, table_little;
