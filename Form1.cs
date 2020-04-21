@@ -275,6 +275,11 @@ namespace WindowsFormsApp1
 
         private string getTotalHours(List<WorkStuff> f_elements, int x)
         {
+            return transformHour(getTotalHoursDouble(f_elements, x));
+        }
+
+        private double getTotalHoursDouble(List<WorkStuff> f_elements, int x)
+        {
             DateTime result, tmp = DateTime.Parse("00:00");
             double sum = 0;
             int i;
@@ -302,29 +307,24 @@ namespace WindowsFormsApp1
                 sum += (result - tmp).TotalHours;
             }
 
-            return transformHour(sum);
+            return sum;
         }
 
         private void loadPret(ExcelWorksheet worksheet)
         {
             if (worksheet.Cells[61, 2].ValueType == CellValueType.Int)
                 pret_curs.Text = worksheet.Cells[61, 2].IntValue.ToString();
-            if (worksheet.Cells[61, 3].ValueType == CellValueType.Int)
-                indice_curs.Text = worksheet.Cells[61, 3].IntValue.ToString();
 
             if (worksheet.Cells[62, 2].ValueType == CellValueType.Int)
                 pret_recuperare.Text = worksheet.Cells[62, 2].IntValue.ToString();
-            if (worksheet.Cells[62, 3].ValueType == CellValueType.Int)
-                indice_recuperare.Text = worksheet.Cells[62, 3].IntValue.ToString();
 
             if (worksheet.Cells[63, 2].ValueType == CellValueType.Int)
                 pret_pregatire.Text = worksheet.Cells[63, 2].IntValue.ToString();
-            if (worksheet.Cells[63, 3].ValueType == CellValueType.Int)
-                indice_pregatire.Text = worksheet.Cells[63, 3].IntValue.ToString();
         }
 
         private void saveTable(string path)
         {
+
             if (init)
             {
                 Table table_main, table_little;
@@ -332,26 +332,26 @@ namespace WindowsFormsApp1
                 table_main = worksheet.Tables.Add("TableMain", "A1:G" + (total_rows + 1).ToString(), true);
                 table_main.BuiltInStyle = BuiltInTableStyleName.TableStyleMedium2;
 
-                worksheet.Cells[60, 1].Value = getTotalHours(elements, 0);
-                worksheet.Cells[61, 1].Value = getTotalHours(elements, 1);
-                worksheet.Cells[62, 1].Value = getTotalHours(elements, 2);
-                worksheet.Cells[63, 1].Value = getTotalHours(elements, 3);
-                worksheet.Cells[61, 2].Value = Convert.ToDouble(pret_curs.Text);
-                worksheet.Cells[61, 3].Value = Convert.ToDouble(indice_curs.Text);
-                worksheet.Cells[61, 4].Value = Convert.ToDouble(pret_curs.Text) * Convert.ToDouble(indice_curs.Text);
-                worksheet.Cells[62, 2].Value = Convert.ToDouble(pret_recuperare.Text);
-                worksheet.Cells[62, 3].Value = Convert.ToDouble(indice_recuperare.Text);
-                worksheet.Cells[62, 4].Value = Convert.ToDouble(pret_recuperare.Text) * Convert.ToDouble(indice_recuperare.Text);
-                worksheet.Cells[63, 2].Value = Convert.ToDouble(pret_pregatire.Text);
-                worksheet.Cells[63, 3].Value = Convert.ToDouble(indice_pregatire.Text);
-                worksheet.Cells[63, 4].Value = Convert.ToDouble(pret_pregatire.Text) * Convert.ToDouble(indice_pregatire.Text);
-                worksheet.Cells[64, 4].Value = Convert.ToDouble(worksheet.Cells[61, 4].Value) + Convert.ToDouble(worksheet.Cells[62, 4].Value) + Convert.ToDouble(worksheet.Cells[63, 4].Value);
-
                 table_little = worksheet.Tables.Add("TableLittle", "A61:E64", true);
                 table_little.BuiltInStyle = BuiltInTableStyleName.TableStyleMedium2;
 
                 init = false;
             }
+
+            worksheet.Cells[60, 1].Value = getTotalHours(elements, 0);
+            worksheet.Cells[61, 1].Value = getTotalHours(elements, 1);
+            worksheet.Cells[62, 1].Value = getTotalHours(elements, 2);
+            worksheet.Cells[63, 1].Value = getTotalHours(elements, 3);
+            worksheet.Cells[61, 2].Value = Convert.ToDouble(pret_curs.Text);
+            worksheet.Cells[61, 3].Value = getTotalHoursDouble(elements, 1);
+            worksheet.Cells[61, 4].Value = Convert.ToDouble(pret_curs.Text) * getTotalHoursDouble(elements, 1);
+            worksheet.Cells[62, 2].Value = Convert.ToDouble(pret_recuperare.Text);
+            worksheet.Cells[62, 3].Value = getTotalHoursDouble(elements, 2);
+            worksheet.Cells[62, 4].Value = Convert.ToDouble(pret_recuperare.Text) * getTotalHoursDouble(elements, 2);
+            worksheet.Cells[63, 2].Value = Convert.ToDouble(pret_pregatire.Text);
+            worksheet.Cells[63, 3].Value = getTotalHoursDouble(elements, 3);
+            worksheet.Cells[63, 4].Value = Convert.ToDouble(pret_pregatire.Text) * getTotalHoursDouble(elements, 3);
+            worksheet.Cells[64, 4].Value = Convert.ToDouble(worksheet.Cells[61, 4].Value) + Convert.ToDouble(worksheet.Cells[62, 4].Value) + Convert.ToDouble(worksheet.Cells[63, 4].Value);
 
             ef.Save(path);
 

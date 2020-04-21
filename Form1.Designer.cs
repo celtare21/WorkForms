@@ -46,19 +46,13 @@
             this.browse = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
             this.textBox11 = new System.Windows.Forms.TextBox();
-            this.indice_pregatire = new System.Windows.Forms.TextBox();
             this.pret_pregatire = new System.Windows.Forms.TextBox();
-            this.textBox14 = new System.Windows.Forms.TextBox();
             this.textBox15 = new System.Windows.Forms.TextBox();
             this.textBox6 = new System.Windows.Forms.TextBox();
-            this.indice_recuperare = new System.Windows.Forms.TextBox();
             this.pret_recuperare = new System.Windows.Forms.TextBox();
-            this.textBox9 = new System.Windows.Forms.TextBox();
             this.textBox10 = new System.Windows.Forms.TextBox();
             this.textBox5 = new System.Windows.Forms.TextBox();
-            this.indice_curs = new System.Windows.Forms.TextBox();
             this.pret_curs = new System.Windows.Forms.TextBox();
-            this.indice_fixed = new System.Windows.Forms.TextBox();
             this.pret_fixed = new System.Windows.Forms.TextBox();
             this.go_back_2 = new System.Windows.Forms.Button();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
@@ -220,19 +214,13 @@
             // panel2
             // 
             this.panel2.Controls.Add(this.textBox11);
-            this.panel2.Controls.Add(this.indice_pregatire);
             this.panel2.Controls.Add(this.pret_pregatire);
-            this.panel2.Controls.Add(this.textBox14);
             this.panel2.Controls.Add(this.textBox15);
             this.panel2.Controls.Add(this.textBox6);
-            this.panel2.Controls.Add(this.indice_recuperare);
             this.panel2.Controls.Add(this.pret_recuperare);
-            this.panel2.Controls.Add(this.textBox9);
             this.panel2.Controls.Add(this.textBox10);
             this.panel2.Controls.Add(this.textBox5);
-            this.panel2.Controls.Add(this.indice_curs);
             this.panel2.Controls.Add(this.pret_curs);
-            this.panel2.Controls.Add(this.indice_fixed);
             this.panel2.Controls.Add(this.pret_fixed);
             this.panel2.Controls.Add(this.go_back_2);
             this.panel2.Location = new System.Drawing.Point(107, 12);
@@ -242,7 +230,7 @@
             // 
             // textBox11
             // 
-            this.textBox11.Location = new System.Drawing.Point(39, 235);
+            this.textBox11.Location = new System.Drawing.Point(39, 261);
             this.textBox11.Name = "textBox11";
             this.textBox11.ReadOnly = true;
             this.textBox11.Size = new System.Drawing.Size(100, 20);
@@ -250,37 +238,18 @@
             this.textBox11.Text = "Ore pregatire:";
             this.textBox11.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
-            // indice_pregatire
-            // 
-            this.indice_pregatire.Location = new System.Drawing.Point(185, 287);
-            this.indice_pregatire.Name = "indice_pregatire";
-            this.indice_pregatire.Size = new System.Drawing.Size(100, 20);
-            this.indice_pregatire.TabIndex = 17;
-            this.indice_pregatire.Text = "0";
-            this.indice_pregatire.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
             // pret_pregatire
             // 
-            this.pret_pregatire.Location = new System.Drawing.Point(185, 261);
+            this.pret_pregatire.Location = new System.Drawing.Point(185, 287);
             this.pret_pregatire.Name = "pret_pregatire";
             this.pret_pregatire.Size = new System.Drawing.Size(100, 20);
             this.pret_pregatire.TabIndex = 16;
             this.pret_pregatire.Text = "0";
             this.pret_pregatire.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
-            // textBox14
-            // 
-            this.textBox14.Location = new System.Drawing.Point(39, 287);
-            this.textBox14.Name = "textBox14";
-            this.textBox14.ReadOnly = true;
-            this.textBox14.Size = new System.Drawing.Size(100, 20);
-            this.textBox14.TabIndex = 15;
-            this.textBox14.Text = "Indice";
-            this.textBox14.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
             // textBox15
             // 
-            this.textBox15.Location = new System.Drawing.Point(39, 261);
+            this.textBox15.Location = new System.Drawing.Point(39, 287);
             this.textBox15.Name = "textBox15";
             this.textBox15.ReadOnly = true;
             this.textBox15.Size = new System.Drawing.Size(100, 20);
@@ -290,7 +259,7 @@
             // 
             // textBox6
             // 
-            this.textBox6.Location = new System.Drawing.Point(39, 122);
+            this.textBox6.Location = new System.Drawing.Point(39, 148);
             this.textBox6.Name = "textBox6";
             this.textBox6.ReadOnly = true;
             this.textBox6.Size = new System.Drawing.Size(100, 20);
@@ -298,37 +267,18 @@
             this.textBox6.Text = "Ore recuperare:";
             this.textBox6.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
-            // indice_recuperare
-            // 
-            this.indice_recuperare.Location = new System.Drawing.Point(185, 174);
-            this.indice_recuperare.Name = "indice_recuperare";
-            this.indice_recuperare.Size = new System.Drawing.Size(100, 20);
-            this.indice_recuperare.TabIndex = 12;
-            this.indice_recuperare.Text = "0";
-            this.indice_recuperare.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
             // pret_recuperare
             // 
-            this.pret_recuperare.Location = new System.Drawing.Point(185, 148);
+            this.pret_recuperare.Location = new System.Drawing.Point(185, 180);
             this.pret_recuperare.Name = "pret_recuperare";
             this.pret_recuperare.Size = new System.Drawing.Size(100, 20);
             this.pret_recuperare.TabIndex = 11;
             this.pret_recuperare.Text = "0";
             this.pret_recuperare.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
-            // textBox9
-            // 
-            this.textBox9.Location = new System.Drawing.Point(39, 174);
-            this.textBox9.Name = "textBox9";
-            this.textBox9.ReadOnly = true;
-            this.textBox9.Size = new System.Drawing.Size(100, 20);
-            this.textBox9.TabIndex = 10;
-            this.textBox9.Text = "Indice";
-            this.textBox9.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
             // textBox10
             // 
-            this.textBox10.Location = new System.Drawing.Point(39, 148);
+            this.textBox10.Location = new System.Drawing.Point(39, 180);
             this.textBox10.Name = "textBox10";
             this.textBox10.ReadOnly = true;
             this.textBox10.Size = new System.Drawing.Size(100, 20);
@@ -338,7 +288,7 @@
             // 
             // textBox5
             // 
-            this.textBox5.Location = new System.Drawing.Point(39, 8);
+            this.textBox5.Location = new System.Drawing.Point(39, 36);
             this.textBox5.Name = "textBox5";
             this.textBox5.ReadOnly = true;
             this.textBox5.Size = new System.Drawing.Size(100, 20);
@@ -346,37 +296,18 @@
             this.textBox5.Text = "Ore curs:";
             this.textBox5.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
-            // indice_curs
-            // 
-            this.indice_curs.Location = new System.Drawing.Point(185, 60);
-            this.indice_curs.Name = "indice_curs";
-            this.indice_curs.Size = new System.Drawing.Size(100, 20);
-            this.indice_curs.TabIndex = 7;
-            this.indice_curs.Text = "0";
-            this.indice_curs.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
             // pret_curs
             // 
-            this.pret_curs.Location = new System.Drawing.Point(185, 34);
+            this.pret_curs.Location = new System.Drawing.Point(185, 62);
             this.pret_curs.Name = "pret_curs";
             this.pret_curs.Size = new System.Drawing.Size(100, 20);
             this.pret_curs.TabIndex = 6;
             this.pret_curs.Text = "0";
             this.pret_curs.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
-            // indice_fixed
-            // 
-            this.indice_fixed.Location = new System.Drawing.Point(39, 60);
-            this.indice_fixed.Name = "indice_fixed";
-            this.indice_fixed.ReadOnly = true;
-            this.indice_fixed.Size = new System.Drawing.Size(100, 20);
-            this.indice_fixed.TabIndex = 5;
-            this.indice_fixed.Text = "Indice";
-            this.indice_fixed.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
             // pret_fixed
             // 
-            this.pret_fixed.Location = new System.Drawing.Point(39, 34);
+            this.pret_fixed.Location = new System.Drawing.Point(39, 62);
             this.pret_fixed.Name = "pret_fixed";
             this.pret_fixed.ReadOnly = true;
             this.pret_fixed.Size = new System.Drawing.Size(100, 20);
@@ -474,21 +405,15 @@
         private System.Windows.Forms.Button get_hours_custom;
         private System.Windows.Forms.SaveFileDialog saveFileDialog1;
         private System.Windows.Forms.Panel panel2;
-        private System.Windows.Forms.TextBox indice_curs;
         private System.Windows.Forms.TextBox pret_curs;
-        private System.Windows.Forms.TextBox indice_fixed;
         private System.Windows.Forms.TextBox pret_fixed;
         private System.Windows.Forms.Button go_back_2;
         private System.Windows.Forms.Button enter_pret;
         private System.Windows.Forms.TextBox textBox11;
-        private System.Windows.Forms.TextBox indice_pregatire;
         private System.Windows.Forms.TextBox pret_pregatire;
-        private System.Windows.Forms.TextBox textBox14;
         private System.Windows.Forms.TextBox textBox15;
         private System.Windows.Forms.TextBox textBox6;
-        private System.Windows.Forms.TextBox indice_recuperare;
         private System.Windows.Forms.TextBox pret_recuperare;
-        private System.Windows.Forms.TextBox textBox9;
         private System.Windows.Forms.TextBox textBox10;
         private System.Windows.Forms.TextBox textBox5;
     }
