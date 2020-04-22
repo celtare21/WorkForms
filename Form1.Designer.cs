@@ -59,6 +59,10 @@
             this.enter_get_hours_custom = new System.Windows.Forms.Button();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.enter_pret = new System.Windows.Forms.Button();
+            this.ora_inceput_text = new System.Windows.Forms.TextBox();
+            this.ora_inceput_box = new System.Windows.Forms.TextBox();
+            this.select_1_check = new System.Windows.Forms.CheckBox();
+            this.select_2_check = new System.Windows.Forms.CheckBox();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.SuspendLayout();
@@ -169,7 +173,7 @@
             this.panel1.Controls.Add(this.go_back);
             this.panel1.Controls.Add(this.textBox4);
             this.panel1.Controls.Add(this.browse);
-            this.panel1.Location = new System.Drawing.Point(51, 15);
+            this.panel1.Location = new System.Drawing.Point(65, 15);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(432, 333);
             this.panel1.TabIndex = 11;
@@ -223,7 +227,7 @@
             this.panel2.Controls.Add(this.pret_curs);
             this.panel2.Controls.Add(this.pret_fixed);
             this.panel2.Controls.Add(this.go_back_2);
-            this.panel2.Location = new System.Drawing.Point(107, 12);
+            this.panel2.Location = new System.Drawing.Point(94, 12);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(364, 370);
             this.panel2.TabIndex = 4;
@@ -349,13 +353,59 @@
             this.enter_pret.UseVisualStyleBackColor = true;
             this.enter_pret.Click += new System.EventHandler(this.enter_pret_Click_1);
             // 
+            // ora_inceput_text
+            // 
+            this.ora_inceput_text.Location = new System.Drawing.Point(407, 192);
+            this.ora_inceput_text.Name = "ora_inceput_text";
+            this.ora_inceput_text.ReadOnly = true;
+            this.ora_inceput_text.Size = new System.Drawing.Size(100, 20);
+            this.ora_inceput_text.TabIndex = 14;
+            this.ora_inceput_text.Text = "Ora inceput";
+            this.ora_inceput_text.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // ora_inceput_box
+            // 
+            this.ora_inceput_box.Location = new System.Drawing.Point(407, 219);
+            this.ora_inceput_box.Name = "ora_inceput_box";
+            this.ora_inceput_box.Size = new System.Drawing.Size(100, 20);
+            this.ora_inceput_box.TabIndex = 15;
+            this.ora_inceput_box.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // select_1_check
+            // 
+            this.select_1_check.AutoSize = true;
+            this.select_1_check.Checked = true;
+            this.select_1_check.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.select_1_check.Location = new System.Drawing.Point(417, 250);
+            this.select_1_check.Name = "select_1_check";
+            this.select_1_check.Size = new System.Drawing.Size(65, 17);
+            this.select_1_check.TabIndex = 16;
+            this.select_1_check.Text = "Select 1";
+            this.select_1_check.UseVisualStyleBackColor = true;
+            this.select_1_check.CheckedChanged += new System.EventHandler(this.select_1_check_CheckedChanged);
+            // 
+            // select_2_check
+            // 
+            this.select_2_check.AutoSize = true;
+            this.select_2_check.Location = new System.Drawing.Point(417, 276);
+            this.select_2_check.Name = "select_2_check";
+            this.select_2_check.Size = new System.Drawing.Size(65, 17);
+            this.select_2_check.TabIndex = 17;
+            this.select_2_check.Text = "Select 2";
+            this.select_2_check.UseVisualStyleBackColor = true;
+            this.select_2_check.CheckedChanged += new System.EventHandler(this.select_2_check_CheckedChanged);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(543, 394);
+            this.Controls.Add(this.select_2_check);
+            this.Controls.Add(this.select_1_check);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.panel2);
+            this.Controls.Add(this.ora_inceput_box);
+            this.Controls.Add(this.ora_inceput_text);
             this.Controls.Add(this.enter_pret);
             this.Controls.Add(this.enter_get_hours_custom);
             this.Controls.Add(this.get_hours_normal);
@@ -416,6 +466,10 @@
         private System.Windows.Forms.TextBox pret_recuperare;
         private System.Windows.Forms.TextBox textBox10;
         private System.Windows.Forms.TextBox textBox5;
+        private System.Windows.Forms.TextBox ora_inceput_text;
+        private System.Windows.Forms.TextBox ora_inceput_box;
+        private System.Windows.Forms.CheckBox select_1_check;
+        private System.Windows.Forms.CheckBox select_2_check;
     }
 }
 

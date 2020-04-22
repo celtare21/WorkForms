@@ -14,6 +14,7 @@ namespace WindowsFormsApp1
         private List<WorkStuff> elements;
         private static int total_rows;
         private static bool init;
+        private double first_hour_entry;
 
         public Form1()
         {
@@ -40,6 +41,12 @@ namespace WindowsFormsApp1
             comboBox3.Items.AddRange(hours);
             comboBox3.DropDownStyle = ComboBoxStyle.DropDownList;
             comboBox3.SelectedItem = "0";
+
+            pret_curs.Text = "17";
+            pret_pregatire.Text = "8";
+            pret_recuperare.Text = "17";
+
+            ora_inceput_box.Text = "16:00";
 
             worksheet.Cells[0, 0].Value = "Data";
             worksheet.Cells[0, 1].Value = "Ora incepere";
@@ -74,6 +81,16 @@ namespace WindowsFormsApp1
             init = true;
         }
 
+        private TimeSpan stringToTimeSpan(string time)
+        {
+            return TimeSpan.Parse(time);
+        }
+
+        private double timeSpanToDouble(TimeSpan time)
+        {
+            return time.TotalHours;
+        }
+
         private void add_button_Click(object sender, EventArgs e)
         {
             string start_hour_final = null, stop_hour_final = null, stop_total_hour = null, curs_hours = null, pregatire_hours = null, recuperare_hours = null;
@@ -85,16 +102,25 @@ namespace WindowsFormsApp1
                 return;
             }
 
-            day = monthCalendar1.SelectionRange.Start.ToString("dd/MM/yyy");
-            allHours(ref start_hour_final, ref stop_hour_final, ref stop_total_hour);
-            otherHours(ref curs_hours, ref pregatire_hours, ref recuperare_hours);
+            first_hour_entry = timeSpanToDouble(stringToTimeSpan(ora_inceput_box.Text));
 
-            elements.Add(new WorkStuff(day, start_hour_final, stop_hour_final, curs_hours, pregatire_hours, recuperare_hours, stop_total_hour));
-            setLoad(total_rows);
+            for (int i = 0; i < monthCalendar1.MaxSelectionCount; i++)
+            {
+                if (i == 0)
+                    day = monthCalendar1.SelectionRange.Start.ToString("dd/MM/yyy");
+                else
+                    day = monthCalendar1.SelectionRange.End.ToString("dd/MM/yyy");
 
-            ++total_rows;
+                allHours(ref start_hour_final, ref stop_hour_final, ref stop_total_hour);
+                otherHours(ref curs_hours, ref pregatire_hours, ref recuperare_hours);
 
-            MessageBox.Show("New data added!");
+                elements.Add(new WorkStuff(day, start_hour_final, stop_hour_final, curs_hours, pregatire_hours, recuperare_hours, stop_total_hour));
+                setLoad(total_rows);
+
+                ++total_rows;
+
+                MessageBox.Show("New data added!");
+            }
 
             save_button.Enabled = true;
             get_hours_normal.Enabled = true;
@@ -187,37 +213,69 @@ namespace WindowsFormsApp1
         private void enter_get_hours_custom_Click(object sender, EventArgs e)
         {
             panel1.Show();
-            save_button.Hide();
-            get_hours_normal.Hide();
-            enter_get_hours_custom.Hide();
-            enter_pret.Hide();
+            hideCommon();
         }
 
         private void enter_pret_Click_1(object sender, EventArgs e)
         {
             panel2.Show();
-            save_button.Hide();
-            get_hours_normal.Hide();
-            enter_get_hours_custom.Hide();
-            enter_pret.Hide();
+            hideCommon();
         }
 
         private void go_back_Click(object sender, EventArgs e)
         {
-            save_button.Show();
-            get_hours_normal.Show();
-            enter_get_hours_custom.Show();
-            enter_pret.Show();
+            showCommon();
             panel1.Hide();
         }
 
         private void go_back_2_Click(object sender, EventArgs e)
         {
+            showCommon();
+            panel2.Hide();
+        }
+
+        private void select_1_check_CheckedChanged(object sender, EventArgs e)
+        {
+            if (select_1_check.Checked == true)
+            {
+                monthCalendar1.MaxSelectionCount = 1;
+                select_1_check.Checked = true;
+                select_2_check.Checked = false;
+            }
+        }
+
+        private void select_2_check_CheckedChanged(object sender, EventArgs e)
+        {
+            if (select_2_check.Checked == true)
+            {
+                monthCalendar1.MaxSelectionCount = 2;
+                select_1_check.Checked = false;
+                select_2_check.Checked = true;
+            }
+        }
+
+        private void hideCommon()
+        {
+            save_button.Hide();
+            get_hours_normal.Hide();
+            enter_get_hours_custom.Hide();
+            enter_pret.Hide();
+            ora_inceput_box.Hide();
+            ora_inceput_text.Hide();
+            select_1_check.Hide();
+            select_2_check.Hide();
+        }
+
+        private void showCommon()
+        {
             save_button.Show();
             get_hours_normal.Show();
             enter_get_hours_custom.Show();
             enter_pret.Show();
-            panel2.Hide();
+            ora_inceput_box.Show();
+            ora_inceput_text.Show();
+            select_1_check.Show();
+            select_2_check.Show();
         }
 
         private void get_hours_custom_Click(object sender, EventArgs e)
@@ -260,7 +318,7 @@ namespace WindowsFormsApp1
             DateTime result1 = default, result2 = default;
             double final;
 
-            start_hour_final = transformHour(Constants.first_hour, ref result1);
+            start_hour_final = transformHour(first_hour_entry, ref result1);
             stop_hour_final = transformHour(getFinalHour(), ref result2);
             final = (result2 - result1).TotalHours;
             stop_total_hour = transformHour(final);
@@ -312,13 +370,13 @@ namespace WindowsFormsApp1
 
         private void loadPret(ExcelWorksheet worksheet)
         {
-            if (worksheet.Cells[61, 2].ValueType == CellValueType.Int)
+            if (worksheet.Cells[61, 2].ValueType == CellValueType.Int && !String.Equals(worksheet.Cells[61, 2].Value.ToString(), "0"))
                 pret_curs.Text = worksheet.Cells[61, 2].IntValue.ToString();
 
-            if (worksheet.Cells[62, 2].ValueType == CellValueType.Int)
+            if (worksheet.Cells[62, 2].ValueType == CellValueType.Int && !String.Equals(worksheet.Cells[62, 2].Value.ToString(), "0"))
                 pret_recuperare.Text = worksheet.Cells[62, 2].IntValue.ToString();
 
-            if (worksheet.Cells[63, 2].ValueType == CellValueType.Int)
+            if (worksheet.Cells[63, 2].ValueType == CellValueType.Int && !String.Equals(worksheet.Cells[63, 2].Value.ToString(), "0"))
                 pret_pregatire.Text = worksheet.Cells[63, 2].IntValue.ToString();
         }
 
@@ -405,7 +463,7 @@ namespace WindowsFormsApp1
 
         private double getFinalHour()
         {
-            return Constants.first_hour + getCursHours() + getPregatireHours() + getRecuperareHours();
+            return first_hour_entry + getCursHours() + getPregatireHours() + getRecuperareHours();
         }
 
         private double getCursHours()
@@ -510,6 +568,5 @@ namespace WindowsFormsApp1
     public static class Constants
     {
         public const int entries = 7;
-        public const double first_hour = 8.00;
     }
 }
