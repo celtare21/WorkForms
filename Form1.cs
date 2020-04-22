@@ -46,7 +46,7 @@ namespace WindowsFormsApp1
             pret_pregatire.Text = "8";
             pret_recuperare.Text = "17";
 
-            ora_inceput_box.Text = "16:00";
+            ora_inceput_box.Text = "15:30";
 
             worksheet.Cells[0, 0].Value = "Data";
             worksheet.Cells[0, 1].Value = "Ora incepere";
@@ -95,6 +95,7 @@ namespace WindowsFormsApp1
         {
             string start_hour_final = null, stop_hour_final = null, stop_total_hour = null, curs_hours = null, pregatire_hours = null, recuperare_hours = null;
             string day;
+            int i, max = 1;
 
             if (comboBox1.Text == "0" && comboBox2.Text == "0" && comboBox3.Text == "0")
             {
@@ -104,7 +105,10 @@ namespace WindowsFormsApp1
 
             first_hour_entry = timeSpanToDouble(stringToTimeSpan(ora_inceput_box.Text));
 
-            for (int i = 0; i < monthCalendar1.MaxSelectionCount; i++)
+            if (monthCalendar1.MaxSelectionCount > 1 && !String.Equals(monthCalendar1.SelectionRange.Start.ToString("dd/MM/yyy"), monthCalendar1.SelectionRange.End.ToString("dd/MM/yyy")))
+                max = 2;
+
+            for (i = 0; i < max; i++)
             {
                 if (i == 0)
                     day = monthCalendar1.SelectionRange.Start.ToString("dd/MM/yyy");
@@ -248,7 +252,7 @@ namespace WindowsFormsApp1
         {
             if (select_2_check.Checked == true)
             {
-                monthCalendar1.MaxSelectionCount = 2;
+                monthCalendar1.MaxSelectionCount = 10;
                 select_1_check.Checked = false;
                 select_2_check.Checked = true;
             }
