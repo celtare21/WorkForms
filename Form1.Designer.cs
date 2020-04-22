@@ -61,8 +61,6 @@
             this.enter_pret = new System.Windows.Forms.Button();
             this.ora_inceput_text = new System.Windows.Forms.TextBox();
             this.ora_inceput_box = new System.Windows.Forms.TextBox();
-            this.select_1_check = new System.Windows.Forms.CheckBox();
-            this.select_2_check = new System.Windows.Forms.CheckBox();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.SuspendLayout();
@@ -371,37 +369,11 @@
             this.ora_inceput_box.TabIndex = 15;
             this.ora_inceput_box.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
-            // select_1_check
-            // 
-            this.select_1_check.AutoSize = true;
-            this.select_1_check.Checked = true;
-            this.select_1_check.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.select_1_check.Location = new System.Drawing.Point(417, 250);
-            this.select_1_check.Name = "select_1_check";
-            this.select_1_check.Size = new System.Drawing.Size(65, 17);
-            this.select_1_check.TabIndex = 16;
-            this.select_1_check.Text = "Select 1";
-            this.select_1_check.UseVisualStyleBackColor = true;
-            this.select_1_check.CheckedChanged += new System.EventHandler(this.select_1_check_CheckedChanged);
-            // 
-            // select_2_check
-            // 
-            this.select_2_check.AutoSize = true;
-            this.select_2_check.Location = new System.Drawing.Point(417, 276);
-            this.select_2_check.Name = "select_2_check";
-            this.select_2_check.Size = new System.Drawing.Size(65, 17);
-            this.select_2_check.TabIndex = 17;
-            this.select_2_check.Text = "Select 2";
-            this.select_2_check.UseVisualStyleBackColor = true;
-            this.select_2_check.CheckedChanged += new System.EventHandler(this.select_2_check_CheckedChanged);
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(543, 394);
-            this.Controls.Add(this.select_2_check);
-            this.Controls.Add(this.select_1_check);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.ora_inceput_box);
@@ -468,8 +440,6 @@
         private System.Windows.Forms.TextBox textBox5;
         private System.Windows.Forms.TextBox ora_inceput_text;
         private System.Windows.Forms.TextBox ora_inceput_box;
-        private System.Windows.Forms.CheckBox select_1_check;
-        private System.Windows.Forms.CheckBox select_2_check;
     }
 }
 

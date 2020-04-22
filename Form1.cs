@@ -30,7 +30,7 @@ namespace WindowsFormsApp1
             ef = new ExcelFile();
             worksheet = ef.Worksheets.Add("Tables");
 
-            monthCalendar1.MaxSelectionCount = 1;
+            monthCalendar1.MaxSelectionCount = 10;
 
             comboBox1.Items.AddRange(hours);
             comboBox1.DropDownStyle = ComboBoxStyle.DropDownList;
@@ -238,26 +238,6 @@ namespace WindowsFormsApp1
             panel2.Hide();
         }
 
-        private void select_1_check_CheckedChanged(object sender, EventArgs e)
-        {
-            if (select_1_check.Checked == true)
-            {
-                monthCalendar1.MaxSelectionCount = 1;
-                select_1_check.Checked = true;
-                select_2_check.Checked = false;
-            }
-        }
-
-        private void select_2_check_CheckedChanged(object sender, EventArgs e)
-        {
-            if (select_2_check.Checked == true)
-            {
-                monthCalendar1.MaxSelectionCount = 10;
-                select_1_check.Checked = false;
-                select_2_check.Checked = true;
-            }
-        }
-
         private void hideCommon()
         {
             save_button.Hide();
@@ -266,8 +246,6 @@ namespace WindowsFormsApp1
             enter_pret.Hide();
             ora_inceput_box.Hide();
             ora_inceput_text.Hide();
-            select_1_check.Hide();
-            select_2_check.Hide();
         }
 
         private void showCommon()
@@ -278,8 +256,6 @@ namespace WindowsFormsApp1
             enter_pret.Show();
             ora_inceput_box.Show();
             ora_inceput_text.Show();
-            select_1_check.Show();
-            select_2_check.Show();
         }
 
         private void get_hours_custom_Click(object sender, EventArgs e)
