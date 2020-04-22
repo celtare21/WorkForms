@@ -311,9 +311,17 @@ namespace WindowsFormsApp1
             recuperare_hours = transformHour(getRecuperareHours());
         }
 
+        private string transformOverHour(double hour)
+        {
+            TimeSpan span;
+
+            span = TimeSpan.FromHours(hour);
+            return ($"{(int)span.TotalHours}:{span:mm}");
+        }
+
         private string getTotalHours(List<WorkStuff> f_elements, int x)
         {
-            return transformHour(getTotalHoursDouble(f_elements, x));
+            return transformOverHour(getTotalHoursDouble(f_elements, x));
         }
 
         private double getTotalHoursDouble(List<WorkStuff> f_elements, int x)
