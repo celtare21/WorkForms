@@ -4,7 +4,6 @@ using System.Windows.Forms;
 using System.Collections.Generic;
 using GemBox.Spreadsheet;
 using GemBox.Spreadsheet.Tables;
-using System.Linq;
 
 namespace WindowsFormsApp1
 {
@@ -85,7 +84,6 @@ namespace WindowsFormsApp1
         private void add_button_Click(object sender, EventArgs e)
         {
             string day;
-            int i, max = 1;
 
             if (comboBox1.Text == "0" && comboBox2.Text == "0" && comboBox3.Text == "0")
             {
@@ -97,6 +95,8 @@ namespace WindowsFormsApp1
 
             if (!isCheckBoxSelected())
             {
+                int max = 1, i;
+
                 if (monthCalendar1.MaxSelectionCount > 1 && !String.Equals(monthCalendar1.SelectionRange.Start.ToString("dd/MM/yyy"), monthCalendar1.SelectionRange.End.ToString("dd/MM/yyy")))
                     max = 2;
 
