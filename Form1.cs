@@ -4,6 +4,7 @@ using System.Windows.Forms;
 using System.Collections.Generic;
 using GemBox.Spreadsheet;
 using GemBox.Spreadsheet.Tables;
+using System.Linq;
 
 namespace WindowsFormsApp1
 {
@@ -81,19 +82,8 @@ namespace WindowsFormsApp1
             init = true;
         }
 
-        private TimeSpan stringToTimeSpan(string time)
-        {
-            return TimeSpan.Parse(time);
-        }
-
-        private double timeSpanToDouble(TimeSpan time)
-        {
-            return time.TotalHours;
-        }
-
         private void add_button_Click(object sender, EventArgs e)
         {
-            string start_hour_final = null, stop_hour_final = null, stop_total_hour = null, curs_hours = null, pregatire_hours = null, recuperare_hours = null;
             string day;
             int i, max = 1;
 
@@ -105,26 +95,37 @@ namespace WindowsFormsApp1
 
             first_hour_entry = timeSpanToDouble(stringToTimeSpan(ora_inceput_box.Text));
 
-            if (monthCalendar1.MaxSelectionCount > 1 && !String.Equals(monthCalendar1.SelectionRange.Start.ToString("dd/MM/yyy"), monthCalendar1.SelectionRange.End.ToString("dd/MM/yyy")))
-                max = 2;
-
-            for (i = 0; i < max; i++)
+            if (!isCheckBoxSelected())
             {
-                if (i == 0)
-                    day = monthCalendar1.SelectionRange.Start.ToString("dd/MM/yyy");
-                else
-                    day = monthCalendar1.SelectionRange.End.ToString("dd/MM/yyy");
+                if (monthCalendar1.MaxSelectionCount > 1 && !String.Equals(monthCalendar1.SelectionRange.Start.ToString("dd/MM/yyy"), monthCalendar1.SelectionRange.End.ToString("dd/MM/yyy")))
+                    max = 2;
 
-                allHours(ref start_hour_final, ref stop_hour_final, ref stop_total_hour);
-                otherHours(ref curs_hours, ref pregatire_hours, ref recuperare_hours);
+                for (i = 0; i < max; i++)
+                {
+                    day = i == 0 ? monthCalendar1.SelectionRange.Start.ToString("dd/MM/yyy") : monthCalendar1.SelectionRange.End.ToString("dd/MM/yyy");
 
-                elements.Add(new WorkStuff(day, start_hour_final, stop_hour_final, curs_hours, pregatire_hours, recuperare_hours, stop_total_hour));
-                setLoad(total_rows);
-
-                ++total_rows;
-
-                MessageBox.Show("New data added!");
+                    addNewItemsOnDay(day);
+                }
             }
+            else
+            {
+                foreach (DateTime date in AllDatesInMonth())
+                {
+                    day = null;
+
+                    if (monday.Checked && date.DayOfWeek == DayOfWeek.Monday || tuesday.Checked && date.DayOfWeek == DayOfWeek.Tuesday ||
+                                wednesday.Checked && date.DayOfWeek == DayOfWeek.Wednesday || thursday.Checked && date.DayOfWeek == DayOfWeek.Thursday ||
+                                        friday.Checked && date.DayOfWeek == DayOfWeek.Friday || saturday.Checked && date.DayOfWeek == DayOfWeek.Saturday)
+                        day = date.ToString("dd/MM/yyy");
+
+                    if (day == null)
+                        continue;
+
+                    addNewItemsOnDay(day);
+                }
+            }
+
+            MessageBox.Show("New data added!");
 
             save_button.Enabled = true;
             get_hours_normal.Enabled = true;
@@ -246,6 +247,12 @@ namespace WindowsFormsApp1
             enter_pret.Hide();
             ora_inceput_box.Hide();
             ora_inceput_text.Hide();
+            monday.Hide();
+            tuesday.Hide();
+            wednesday.Hide();
+            thursday.Hide();
+            friday.Hide();
+            saturday.Hide();
         }
 
         private void showCommon()
@@ -256,6 +263,12 @@ namespace WindowsFormsApp1
             enter_pret.Show();
             ora_inceput_box.Show();
             ora_inceput_text.Show();
+            monday.Show();
+            tuesday.Show();
+            wednesday.Show();
+            thursday.Show();
+            friday.Show();
+            saturday.Show();
         }
 
         private void get_hours_custom_Click(object sender, EventArgs e)
@@ -268,6 +281,34 @@ namespace WindowsFormsApp1
             loadFile(loadedFile, ref custom_elements, false, false);
 
             MessageBox.Show(getTotalHours(custom_elements, 0));
+        }
+
+        private void addNewItemsOnDay(string day)
+        {
+            string start_hour_final = null, stop_hour_final = null, stop_total_hour = null, curs_hours = null, pregatire_hours = null, recuperare_hours = null;
+
+            allHours(ref start_hour_final, ref stop_hour_final, ref stop_total_hour);
+            otherHours(ref curs_hours, ref pregatire_hours, ref recuperare_hours);
+
+            elements.Add(new WorkStuff(day, start_hour_final, stop_hour_final, curs_hours, pregatire_hours, recuperare_hours, stop_total_hour));
+            setLoad(total_rows);
+
+            ++total_rows;
+        }
+
+        public static IEnumerable<DateTime> AllDatesInMonth()
+        {
+            int days = DateTime.DaysInMonth(Constants.current_year, Constants.current_month);
+
+            for (int day = 1; day <= days; day++)
+            {
+                yield return new DateTime(Constants.current_year, Constants.current_month, day);
+            }
+        }
+
+        private bool isCheckBoxSelected()
+        {
+            return monday.Checked || tuesday.Checked || wednesday.Checked || thursday.Checked || friday.Checked || saturday.Checked;
         }
 
         private string transformHour(double hour)
@@ -293,6 +334,24 @@ namespace WindowsFormsApp1
             return result.ToString("HH:mm", CultureInfo.CurrentCulture);
         }
 
+        private string transformOverHour(double hour)
+        {
+            TimeSpan span;
+
+            span = TimeSpan.FromHours(hour);
+            return $"{(int)span.TotalHours}:{span:mm}";
+        }
+
+        private TimeSpan stringToTimeSpan(string time)
+        {
+            return TimeSpan.Parse(time);
+        }
+
+        private double timeSpanToDouble(TimeSpan time)
+        {
+            return time.TotalHours;
+        }
+
         private void allHours(ref string start_hour_final, ref string stop_hour_final, ref string stop_total_hour)
         {
             DateTime result1 = default, result2 = default;
@@ -309,14 +368,6 @@ namespace WindowsFormsApp1
             curs_hours = transformHour(getCursHours());
             pregatire_hours = transformHour(getPregatireHours());
             recuperare_hours = transformHour(getRecuperareHours());
-        }
-
-        private string transformOverHour(double hour)
-        {
-            TimeSpan span;
-
-            span = TimeSpan.FromHours(hour);
-            return ($"{(int)span.TotalHours}:{span:mm}");
         }
 
         private string getTotalHours(List<WorkStuff> f_elements, int x)
@@ -556,5 +607,7 @@ namespace WindowsFormsApp1
     public static class Constants
     {
         public const int entries = 7;
+        public static int current_year = DateTime.Now.Year;
+        public static int current_month = DateTime.Now.Month;
     }
 }

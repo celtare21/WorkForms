@@ -61,6 +61,12 @@
             this.enter_pret = new System.Windows.Forms.Button();
             this.ora_inceput_text = new System.Windows.Forms.TextBox();
             this.ora_inceput_box = new System.Windows.Forms.TextBox();
+            this.monday = new System.Windows.Forms.CheckBox();
+            this.tuesday = new System.Windows.Forms.CheckBox();
+            this.wednesday = new System.Windows.Forms.CheckBox();
+            this.thursday = new System.Windows.Forms.CheckBox();
+            this.friday = new System.Windows.Forms.CheckBox();
+            this.saturday = new System.Windows.Forms.CheckBox();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.SuspendLayout();
@@ -171,7 +177,7 @@
             this.panel1.Controls.Add(this.go_back);
             this.panel1.Controls.Add(this.textBox4);
             this.panel1.Controls.Add(this.browse);
-            this.panel1.Location = new System.Drawing.Point(65, 15);
+            this.panel1.Location = new System.Drawing.Point(60, 15);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(432, 333);
             this.panel1.TabIndex = 11;
@@ -225,7 +231,7 @@
             this.panel2.Controls.Add(this.pret_curs);
             this.panel2.Controls.Add(this.pret_fixed);
             this.panel2.Controls.Add(this.go_back_2);
-            this.panel2.Location = new System.Drawing.Point(94, 12);
+            this.panel2.Location = new System.Drawing.Point(94, 1);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(364, 370);
             this.panel2.TabIndex = 4;
@@ -369,13 +375,79 @@
             this.ora_inceput_box.TabIndex = 15;
             this.ora_inceput_box.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
+            // monday
+            // 
+            this.monday.AutoSize = true;
+            this.monday.Location = new System.Drawing.Point(34, 62);
+            this.monday.Name = "monday";
+            this.monday.Size = new System.Drawing.Size(64, 17);
+            this.monday.TabIndex = 16;
+            this.monday.Text = "Monday";
+            this.monday.UseVisualStyleBackColor = true;
+            // 
+            // tuesday
+            // 
+            this.tuesday.AutoSize = true;
+            this.tuesday.Location = new System.Drawing.Point(34, 85);
+            this.tuesday.Name = "tuesday";
+            this.tuesday.Size = new System.Drawing.Size(67, 17);
+            this.tuesday.TabIndex = 17;
+            this.tuesday.Text = "Tuesday";
+            this.tuesday.UseVisualStyleBackColor = true;
+            // 
+            // wednesday
+            // 
+            this.wednesday.AutoSize = true;
+            this.wednesday.Location = new System.Drawing.Point(34, 108);
+            this.wednesday.Name = "wednesday";
+            this.wednesday.Size = new System.Drawing.Size(83, 17);
+            this.wednesday.TabIndex = 18;
+            this.wednesday.Text = "Wednesday";
+            this.wednesday.UseVisualStyleBackColor = true;
+            // 
+            // thursday
+            // 
+            this.thursday.AutoSize = true;
+            this.thursday.Location = new System.Drawing.Point(34, 131);
+            this.thursday.Name = "thursday";
+            this.thursday.Size = new System.Drawing.Size(70, 17);
+            this.thursday.TabIndex = 19;
+            this.thursday.Text = "Thursday";
+            this.thursday.UseVisualStyleBackColor = true;
+            // 
+            // friday
+            // 
+            this.friday.AutoSize = true;
+            this.friday.Location = new System.Drawing.Point(34, 154);
+            this.friday.Name = "friday";
+            this.friday.Size = new System.Drawing.Size(54, 17);
+            this.friday.TabIndex = 20;
+            this.friday.Text = "Friday";
+            this.friday.UseVisualStyleBackColor = true;
+            // 
+            // saturday
+            // 
+            this.saturday.AutoSize = true;
+            this.saturday.Location = new System.Drawing.Point(34, 177);
+            this.saturday.Name = "saturday";
+            this.saturday.Size = new System.Drawing.Size(68, 17);
+            this.saturday.TabIndex = 21;
+            this.saturday.Text = "Saturday";
+            this.saturday.UseVisualStyleBackColor = true;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(543, 394);
-            this.Controls.Add(this.panel1);
             this.Controls.Add(this.panel2);
+            this.Controls.Add(this.saturday);
+            this.Controls.Add(this.friday);
+            this.Controls.Add(this.thursday);
+            this.Controls.Add(this.wednesday);
+            this.Controls.Add(this.tuesday);
+            this.Controls.Add(this.monday);
+            this.Controls.Add(this.panel1);
             this.Controls.Add(this.ora_inceput_box);
             this.Controls.Add(this.ora_inceput_text);
             this.Controls.Add(this.enter_pret);
@@ -440,6 +512,12 @@
         private System.Windows.Forms.TextBox textBox5;
         private System.Windows.Forms.TextBox ora_inceput_text;
         private System.Windows.Forms.TextBox ora_inceput_box;
+        private System.Windows.Forms.CheckBox monday;
+        private System.Windows.Forms.CheckBox tuesday;
+        private System.Windows.Forms.CheckBox wednesday;
+        private System.Windows.Forms.CheckBox thursday;
+        private System.Windows.Forms.CheckBox friday;
+        private System.Windows.Forms.CheckBox saturday;
     }
 }
 
