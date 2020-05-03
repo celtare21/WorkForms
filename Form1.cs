@@ -102,7 +102,7 @@ namespace WindowsFormsApp1
 
                 for (i = 0; i < max; i++)
                 {
-                    day = i == 0 ? monthCalendar1.SelectionRange.Start.ToString("dd/MM/yyy") : monthCalendar1.SelectionRange.End.ToString("dd/MM/yyy");
+                    day = (i == 0) ? monthCalendar1.SelectionRange.Start.ToString("dd/MM/yyy") : monthCalendar1.SelectionRange.End.ToString("dd/MM/yyy");
 
                     addNewItemsOnDay(day);
                 }
@@ -291,7 +291,6 @@ namespace WindowsFormsApp1
             otherHours(ref curs_hours, ref pregatire_hours, ref recuperare_hours);
 
             elements.Add(new WorkStuff(day, start_hour_final, stop_hour_final, curs_hours, pregatire_hours, recuperare_hours, stop_total_hour));
-            setLoad(total_rows);
 
             ++total_rows;
         }
@@ -407,6 +406,22 @@ namespace WindowsFormsApp1
             return sum;
         }
 
+        private void sortByDate()
+        {
+            int i, j;
+
+            for (i = 0; i < total_rows - 1; i++)
+                for (j = 0; j < total_rows - i - 1; j++)
+                    if (Convert.ToDateTime(elements[j].day, new CultureInfo("en-GB")) > Convert.ToDateTime(elements[j + 1].day, new CultureInfo("en-GB")))
+                    {
+                        WorkStuff tmp;
+
+                        tmp = elements[j];
+                        elements[j] = elements[j + 1];
+                        elements[j + 1] = tmp;
+                    }
+        }
+
         private void loadPret(ExcelWorksheet worksheet)
         {
             if (worksheet.Cells[61, 2].ValueType == CellValueType.Int && !String.Equals(worksheet.Cells[61, 2].Value.ToString(), "0"))
@@ -421,6 +436,12 @@ namespace WindowsFormsApp1
 
         private void saveTable(string path)
         {
+            int i;
+
+            sortByDate();
+            for (i = 0; i < total_rows; i++)
+                setLoad(i);
+
             if (init)
             {
                 Table table_main, table_little;
@@ -487,10 +508,7 @@ namespace WindowsFormsApp1
                         {
                             f_elements.Add(new WorkStuff(day, start_hour, stop_hour, curs_hours, pregatire_hours, recuperare_hours, final_hours));
                             if (rows)
-                            {
-                                setLoad(total_rows);
                                 ++total_rows;
-                            }
                             write = false;
                         }
                         j = 0;
