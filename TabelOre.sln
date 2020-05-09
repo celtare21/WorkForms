@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29721.120
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WindowsFormsApp1", "WindowsFormsApp1.csproj", "{621F53C2-0AFF-4ABE-8970-647B2F79E83B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TabelOre", "TabelOre.csproj", "{621F53C2-0AFF-4ABE-8970-647B2F79E83B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
