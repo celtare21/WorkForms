@@ -10,10 +10,10 @@ namespace WindowsFormsApp1
     public partial class Form1 : Form
     {
         private ExcelWorksheet worksheet;
-        private ExcelFile ef;
+        private ExcelFile loadedFile;
         private List<WorkStuff> elements;
+        private bool new_file = true;
         private static int total_rows;
-        private static bool init;
         private double first_hour_entry;
 
         public Form1()
@@ -26,9 +26,6 @@ namespace WindowsFormsApp1
             string[] hours = new string[] { "0", "1", "2", "3", "4", "5", "6", "7", "8" };
 
             SpreadsheetInfo.SetLicense("FREE-LIMITED-KEY");
-
-            ef = new ExcelFile();
-            worksheet = ef.Worksheets.Add("Tables");
 
             monthCalendar1.MaxSelectionCount = 10;
 
@@ -48,37 +45,13 @@ namespace WindowsFormsApp1
 
             ora_inceput_box.Text = "15:30";
 
-            worksheet.Cells[0, 0].Value = "Data";
-            worksheet.Cells[0, 1].Value = "Ora incepere";
-            worksheet.Cells[0, 2].Value = "Ora sfarsit";
-            worksheet.Cells[0, 3].Value = "Curs alocat";
-            worksheet.Cells[0, 4].Value = "Pregatire alocat";
-            worksheet.Cells[0, 5].Value = "Recuperare alocat";
-            worksheet.Cells[0, 6].Value = "Ora total";
-            worksheet.Columns[0].SetWidth(140, LengthUnit.Pixel);
-            worksheet.Columns[1].SetWidth(110, LengthUnit.Pixel);
-            worksheet.Columns[2].SetWidth(100, LengthUnit.Pixel);
-            worksheet.Columns[3].SetWidth(100, LengthUnit.Pixel);
-            worksheet.Columns[4].SetWidth(120, LengthUnit.Pixel);
-            worksheet.Columns[5].SetWidth(140, LengthUnit.Pixel);
-            worksheet.Columns[6].SetWidth(90, LengthUnit.Pixel);
-            worksheet.Cells[60, 0].Value = "TOTAL:";
-            worksheet.Cells[61, 0].Value = "TOTAL CURS:";
-            worksheet.Cells[62, 0].Value = "TOTAL RECUPERARE:";
-            worksheet.Cells[63, 0].Value = "TOTAL PREGATIRE:";
-            worksheet.Cells[60, 2].Value = "PRET/H";
-            worksheet.Cells[60, 3].Value = "INDICE";
-            worksheet.Cells[60, 4].Value = "VALOARE";
+            elements = new List<WorkStuff>();
 
             save_button.Enabled = false;
             get_hours_normal.Enabled = false;
             get_hours_custom.Enabled = false;
             panel1.Hide();
             panel2.Hide();
-
-            elements = new List<WorkStuff>();
-
-            init = true;
         }
 
         private void add_button_Click(object sender, EventArgs e)
@@ -134,7 +107,6 @@ namespace WindowsFormsApp1
         private void load_button_Click(object sender, EventArgs e)
         {
             OpenFileDialog openFileDialog;
-            ExcelFile loadedFile;
 
             openFileDialog = new OpenFileDialog
             {
@@ -153,6 +125,8 @@ namespace WindowsFormsApp1
 
             if (openFileDialog.ShowDialog() != DialogResult.OK)
                 return;
+
+            new_file = false;
 
             loadedFile = ExcelFile.Load(openFileDialog.FileName);
 
@@ -239,6 +213,18 @@ namespace WindowsFormsApp1
             panel2.Hide();
         }
 
+        private void get_hours_custom_Click(object sender, EventArgs e)
+        {
+            List<WorkStuff> custom_elements = new List<WorkStuff>();
+            ExcelFile loadedFile;
+
+            loadedFile = ExcelFile.Load(textBox4.Text);
+
+            loadFile(loadedFile, ref custom_elements, false, false);
+
+            MessageBox.Show(getTotalHours(custom_elements, 0));
+        }
+
         private void hideCommon()
         {
             save_button.Hide();
@@ -271,16 +257,29 @@ namespace WindowsFormsApp1
             saturday.Show();
         }
 
-        private void get_hours_custom_Click(object sender, EventArgs e)
+        private void createFile()
         {
-            List<WorkStuff> custom_elements = new List<WorkStuff>();
-            ExcelFile loadedFile;
-
-            loadedFile = ExcelFile.Load(textBox4.Text);
-
-            loadFile(loadedFile, ref custom_elements, false, false);
-
-            MessageBox.Show(getTotalHours(custom_elements, 0));
+            worksheet.Cells[0, 0].Value = "Data";
+            worksheet.Cells[0, 1].Value = "Ora incepere";
+            worksheet.Cells[0, 2].Value = "Ora sfarsit";
+            worksheet.Cells[0, 3].Value = "Curs alocat";
+            worksheet.Cells[0, 4].Value = "Pregatire alocat";
+            worksheet.Cells[0, 5].Value = "Recuperare alocat";
+            worksheet.Cells[0, 6].Value = "Ora total";
+            worksheet.Columns[0].SetWidth(140, LengthUnit.Pixel);
+            worksheet.Columns[1].SetWidth(110, LengthUnit.Pixel);
+            worksheet.Columns[2].SetWidth(100, LengthUnit.Pixel);
+            worksheet.Columns[3].SetWidth(100, LengthUnit.Pixel);
+            worksheet.Columns[4].SetWidth(120, LengthUnit.Pixel);
+            worksheet.Columns[5].SetWidth(140, LengthUnit.Pixel);
+            worksheet.Columns[6].SetWidth(90, LengthUnit.Pixel);
+            worksheet.Cells[60, 0].Value = "TOTAL:";
+            worksheet.Cells[61, 0].Value = "TOTAL CURS:";
+            worksheet.Cells[62, 0].Value = "TOTAL RECUPERARE:";
+            worksheet.Cells[63, 0].Value = "TOTAL PREGATIRE:";
+            worksheet.Cells[60, 2].Value = "PRET/H";
+            worksheet.Cells[60, 3].Value = "INDICE";
+            worksheet.Cells[60, 4].Value = "VALOARE";
         }
 
         private void addNewItemsOnDay(string day)
@@ -436,24 +435,33 @@ namespace WindowsFormsApp1
 
         private void saveTable(string path)
         {
+            Table table_main, table_little;
             int i;
+
+            if (new_file)
+            {
+                loadedFile = new ExcelFile();
+                worksheet = loadedFile.Worksheets.Add("Tables");
+            }
+
+            if (worksheet.Tables.Count > 0)
+            {
+                for (i = 0; i <= worksheet.Tables.Count; i++)
+                {
+                    worksheet.Tables.Remove(worksheet.Tables[0], RemoveShiftDirection.Left);
+                }
+            }
+
+            createFile();
 
             sortByDate();
             for (i = 0; i < total_rows; i++)
                 setLoad(i);
 
-            if (init)
-            {
-                Table table_main, table_little;
-
-                table_main = worksheet.Tables.Add("TableMain", "A1:G" + (total_rows + 1).ToString(), true);
-                table_main.BuiltInStyle = BuiltInTableStyleName.TableStyleMedium2;
-
-                table_little = worksheet.Tables.Add("TableLittle", "A61:E64", true);
-                table_little.BuiltInStyle = BuiltInTableStyleName.TableStyleMedium2;
-
-                init = false;
-            }
+            table_main = worksheet.Tables.Add("TableMain", "A1:G" + (total_rows + 1).ToString(), true);
+            table_main.BuiltInStyle = BuiltInTableStyleName.TableStyleMedium2;
+            table_little = worksheet.Tables.Add("TableLittle", "A61:E64", true);
+            table_little.BuiltInStyle = BuiltInTableStyleName.TableStyleMedium2;
 
             worksheet.Cells[60, 1].Value = getTotalHours(elements, 0);
             worksheet.Cells[61, 1].Value = getTotalHours(elements, 1);
@@ -470,7 +478,7 @@ namespace WindowsFormsApp1
             worksheet.Cells[63, 4].Value = Convert.ToDouble(pret_pregatire.Text) * getTotalHoursDouble(elements, 3);
             worksheet.Cells[64, 4].Value = Convert.ToDouble(worksheet.Cells[61, 4].Value) + Convert.ToDouble(worksheet.Cells[62, 4].Value) + Convert.ToDouble(worksheet.Cells[63, 4].Value);
 
-            ef.Save(path);
+            loadedFile.Save(path);
 
             MessageBox.Show("Data saved!");
         }
@@ -485,36 +493,35 @@ namespace WindowsFormsApp1
             if (rows)
                 total_rows = 0;
 
-            foreach (ExcelWorksheet worksheet in file.Worksheets)
+            worksheet = file.Worksheets[0];
+
+            if (pret)
+                loadPret(worksheet);
+            foreach (ExcelRow row in worksheet.Rows)
             {
-                if (pret)
-                    loadPret(worksheet);
-                foreach (ExcelRow row in worksheet.Rows)
+                if (!first_run)
                 {
-                    if (!first_run)
+                    foreach (ExcelCell cell in row.AllocatedCells)
                     {
-                        foreach (ExcelCell cell in row.AllocatedCells)
+                        if (cell.ValueType != CellValueType.Null)
                         {
-                            if (cell.ValueType != CellValueType.Null)
-                            {
-                                if (String.Equals(cell.Value.ToString(), "TOTAL:".ToString()))
-                                    return;
-                                setLoad(cell, j, ref day, ref start_hour, ref stop_hour, ref curs_hours, ref pregatire_hours, ref recuperare_hours, ref final_hours);
-                                ++j;
-                                write = true;
-                            }
+                            if (String.Equals(cell.Value.ToString(), "TOTAL:".ToString()))
+                                return;
+                            setLoad(cell, j, ref day, ref start_hour, ref stop_hour, ref curs_hours, ref pregatire_hours, ref recuperare_hours, ref final_hours);
+                            ++j;
+                            write = true;
                         }
-                        if (write)
-                        {
-                            f_elements.Add(new WorkStuff(day, start_hour, stop_hour, curs_hours, pregatire_hours, recuperare_hours, final_hours));
-                            if (rows)
-                                ++total_rows;
-                            write = false;
-                        }
-                        j = 0;
                     }
-                    first_run = false;
+                    if (write)
+                    {
+                        f_elements.Add(new WorkStuff(day, start_hour, stop_hour, curs_hours, pregatire_hours, recuperare_hours, final_hours));
+                        if (rows)
+                            ++total_rows;
+                        write = false;
+                    }
+                    j = 0;
                 }
+                first_run = false;
             }
         }
 
