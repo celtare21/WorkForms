@@ -257,15 +257,8 @@ namespace WindowsFormsApp1
             saturday.Show();
         }
 
-        private void createFile()
+        private void populateTables()
         {
-            worksheet.Cells[0, 0].Value = "Data";
-            worksheet.Cells[0, 1].Value = "Ora incepere";
-            worksheet.Cells[0, 2].Value = "Ora sfarsit";
-            worksheet.Cells[0, 3].Value = "Curs alocat";
-            worksheet.Cells[0, 4].Value = "Pregatire alocat";
-            worksheet.Cells[0, 5].Value = "Recuperare alocat";
-            worksheet.Cells[0, 6].Value = "Ora total";
             worksheet.Columns[0].SetWidth(140, LengthUnit.Pixel);
             worksheet.Columns[1].SetWidth(110, LengthUnit.Pixel);
             worksheet.Columns[2].SetWidth(100, LengthUnit.Pixel);
@@ -273,6 +266,15 @@ namespace WindowsFormsApp1
             worksheet.Columns[4].SetWidth(120, LengthUnit.Pixel);
             worksheet.Columns[5].SetWidth(140, LengthUnit.Pixel);
             worksheet.Columns[6].SetWidth(90, LengthUnit.Pixel);
+
+            worksheet.Cells[0, 0].Value = "Data";
+            worksheet.Cells[0, 1].Value = "Ora incepere";
+            worksheet.Cells[0, 2].Value = "Ora sfarsit";
+            worksheet.Cells[0, 3].Value = "Curs alocat";
+            worksheet.Cells[0, 4].Value = "Pregatire alocat";
+            worksheet.Cells[0, 5].Value = "Recuperare alocat";
+            worksheet.Cells[0, 6].Value = "Ora total";
+
             worksheet.Cells[60, 0].Value = "TOTAL:";
             worksheet.Cells[61, 0].Value = "TOTAL CURS:";
             worksheet.Cells[62, 0].Value = "TOTAL RECUPERARE:";
@@ -445,14 +447,10 @@ namespace WindowsFormsApp1
             }
 
             if (worksheet.Tables.Count > 0)
-            {
                 for (i = 0; i <= worksheet.Tables.Count; i++)
-                {
                     worksheet.Tables.Remove(worksheet.Tables[0], RemoveShiftDirection.Left);
-                }
-            }
 
-            createFile();
+            populateTables();
 
             sortByDate();
             for (i = 0; i < total_rows; i++)
