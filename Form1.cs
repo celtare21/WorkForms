@@ -126,7 +126,7 @@ namespace WindowsFormsApp1
 
             loadedFile = ExcelFile.Load(openFileDialog.FileName);
 
-            loadFile(loadedFile, ref elements, true, true);
+            loadFile(loadedFile, true, true);
 
             MessageBox.Show("File loaded!");
 
@@ -311,32 +311,32 @@ namespace WindowsFormsApp1
             recuperare_hours = transformHour(getRecuperareHours());
         }
 
-        private string getTotalHours(List<WorkStuff> f_elements, int x)
+        private string getTotalHours(int x)
         {
-            return transformOverHour(getTotalHoursDouble(f_elements, x));
+            return transformOverHour(getTotalHoursDouble(x));
         }
 
-        private double getTotalHoursDouble(List<WorkStuff> f_elements, int x)
+        private double getTotalHoursDouble(int x)
         {
             DateTime result, tmp = DateTime.Parse("00:00");
             double sum = 0;
             int i;
 
-            for (i = 0; i < f_elements.Count; i++)
+            for (i = 0; i < elements.Count; i++)
             {
                 switch (x)
                 {
                     case 0:
-                        result = DateTime.Parse(f_elements[i].total_hours);
+                        result = DateTime.Parse(elements[i].total_hours);
                         break;
                     case 1:
-                        result = DateTime.Parse(f_elements[i].curs_hours);
+                        result = DateTime.Parse(elements[i].curs_hours);
                         break;
                     case 2:
-                        result = DateTime.Parse(f_elements[i].recuperare_hours);
+                        result = DateTime.Parse(elements[i].recuperare_hours);
                         break;
                     case 3:
-                        result = DateTime.Parse(f_elements[i].pregatire_hours);
+                        result = DateTime.Parse(elements[i].pregatire_hours);
                         break;
                     default:
                         result = DateTime.Parse("00:00");
@@ -403,19 +403,19 @@ namespace WindowsFormsApp1
             table_little = worksheet.Tables.Add("TableLittle", "A61:E64", true);
             table_little.BuiltInStyle = BuiltInTableStyleName.TableStyleMedium2;
 
-            worksheet.Cells[60, 1].Value = getTotalHours(elements, 0);
-            worksheet.Cells[61, 1].Value = getTotalHours(elements, 1);
-            worksheet.Cells[62, 1].Value = getTotalHours(elements, 2);
-            worksheet.Cells[63, 1].Value = getTotalHours(elements, 3);
+            worksheet.Cells[60, 1].Value = getTotalHours(0);
+            worksheet.Cells[61, 1].Value = getTotalHours(1);
+            worksheet.Cells[62, 1].Value = getTotalHours(2);
+            worksheet.Cells[63, 1].Value = getTotalHours(3);
             worksheet.Cells[61, 2].Value = Convert.ToDouble(pret_curs.Text);
-            worksheet.Cells[61, 3].Value = getTotalHoursDouble(elements, 1);
-            worksheet.Cells[61, 4].Value = Convert.ToDouble(pret_curs.Text) * getTotalHoursDouble(elements, 1);
+            worksheet.Cells[61, 3].Value = getTotalHoursDouble(1);
+            worksheet.Cells[61, 4].Value = Convert.ToDouble(pret_curs.Text) * getTotalHoursDouble(1);
             worksheet.Cells[62, 2].Value = Convert.ToDouble(pret_recuperare.Text);
-            worksheet.Cells[62, 3].Value = getTotalHoursDouble(elements, 2);
-            worksheet.Cells[62, 4].Value = Convert.ToDouble(pret_recuperare.Text) * getTotalHoursDouble(elements, 2);
+            worksheet.Cells[62, 3].Value = getTotalHoursDouble(2);
+            worksheet.Cells[62, 4].Value = Convert.ToDouble(pret_recuperare.Text) * getTotalHoursDouble(2);
             worksheet.Cells[63, 2].Value = Convert.ToDouble(pret_pregatire.Text);
-            worksheet.Cells[63, 3].Value = getTotalHoursDouble(elements, 3);
-            worksheet.Cells[63, 4].Value = Convert.ToDouble(pret_pregatire.Text) * getTotalHoursDouble(elements, 3);
+            worksheet.Cells[63, 3].Value = getTotalHoursDouble(3);
+            worksheet.Cells[63, 4].Value = Convert.ToDouble(pret_pregatire.Text) * getTotalHoursDouble(3);
             worksheet.Cells[64, 4].Value = Convert.ToDouble(worksheet.Cells[61, 4].Value) + Convert.ToDouble(worksheet.Cells[62, 4].Value) + Convert.ToDouble(worksheet.Cells[63, 4].Value);
 
             loadedFile.Save(path);
@@ -423,7 +423,7 @@ namespace WindowsFormsApp1
             MessageBox.Show("Data saved!");
         }
 
-        private void loadFile(ExcelFile file, ref List<WorkStuff> f_elements, bool rows, bool pret)
+        private void loadFile(ExcelFile file, bool rows, bool pret)
         {
             string day = null, start_hour = null, stop_hour = null, final_hours = null, curs_hours = null, pregatire_hours = null, recuperare_hours = null;
             bool first_run = true;
@@ -454,7 +454,7 @@ namespace WindowsFormsApp1
                     }
                     if (write)
                     {
-                        f_elements.Add(new WorkStuff(day, start_hour, stop_hour, curs_hours, pregatire_hours, recuperare_hours, final_hours));
+                        elements.Add(new WorkStuff(day, start_hour, stop_hour, curs_hours, pregatire_hours, recuperare_hours, final_hours));
                         if (rows)
                             ++total_rows;
                         write = false;
