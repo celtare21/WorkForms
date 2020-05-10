@@ -153,16 +153,6 @@ namespace WindowsFormsApp1
                 saveTable(saveFileDialog.FileName);
         }
 
-        private void get_hours_normal_Click(object sender, EventArgs e)
-        {
-            MessageBox.Show(getTotalHours(elements, 0));
-        }
-
-        private void enter_get_hours_custom_Click(object sender, EventArgs e)
-        {
-            hideCommon();
-        }
-
         private void enter_pret_Click_1(object sender, EventArgs e)
         {
             panel2.Show();
