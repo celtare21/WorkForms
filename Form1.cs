@@ -385,6 +385,7 @@ namespace WindowsFormsApp1
             {
                 loadedFile = new ExcelFile();
                 worksheet = loadedFile.Worksheets.Add("Tables");
+                loadedFile.Worksheets.Add("Demo");
             }
 
             if (worksheet.Tables.Count > 0)
