@@ -34,7 +34,6 @@
             this.add_button = new System.Windows.Forms.Button();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.textBox2 = new System.Windows.Forms.TextBox();
-            this.load_button = new System.Windows.Forms.Button();
             this.save_button = new System.Windows.Forms.Button();
             this.comboBox3 = new System.Windows.Forms.ComboBox();
             this.textBox3 = new System.Windows.Forms.TextBox();
@@ -43,10 +42,10 @@
             this.pret_pregatire = new System.Windows.Forms.TextBox();
             this.textBox15 = new System.Windows.Forms.TextBox();
             this.textBox6 = new System.Windows.Forms.TextBox();
-            this.pret_recuperare = new System.Windows.Forms.TextBox();
+            this.pret_secundar = new System.Windows.Forms.TextBox();
             this.textBox10 = new System.Windows.Forms.TextBox();
             this.textBox5 = new System.Windows.Forms.TextBox();
-            this.pret_curs = new System.Windows.Forms.TextBox();
+            this.pret_principal = new System.Windows.Forms.TextBox();
             this.pret_fixed = new System.Windows.Forms.TextBox();
             this.go_back_2 = new System.Windows.Forms.Button();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
@@ -76,7 +75,7 @@
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(121, 21);
             this.comboBox1.TabIndex = 1;
-            this.comboBox1.Text = "Ore curs";
+            this.comboBox1.Text = "Ore principal";
             // 
             // comboBox2
             // 
@@ -85,7 +84,7 @@
             this.comboBox2.Name = "comboBox2";
             this.comboBox2.Size = new System.Drawing.Size(121, 21);
             this.comboBox2.TabIndex = 2;
-            this.comboBox2.Text = "Ore Pregatire";
+            this.comboBox2.Text = "Ore secundar";
             // 
             // add_button
             // 
@@ -104,7 +103,7 @@
             this.textBox1.ReadOnly = true;
             this.textBox1.Size = new System.Drawing.Size(90, 20);
             this.textBox1.TabIndex = 4;
-            this.textBox1.Text = "Ore Curs";
+            this.textBox1.Text = "Ore Principal";
             // 
             // textBox2
             // 
@@ -113,17 +112,7 @@
             this.textBox2.ReadOnly = true;
             this.textBox2.Size = new System.Drawing.Size(90, 20);
             this.textBox2.TabIndex = 5;
-            this.textBox2.Text = "Ore Pregatire";
-            // 
-            // load_button
-            // 
-            this.load_button.Location = new System.Drawing.Point(307, 287);
-            this.load_button.Name = "load_button";
-            this.load_button.Size = new System.Drawing.Size(75, 23);
-            this.load_button.TabIndex = 6;
-            this.load_button.Text = "Load";
-            this.load_button.UseVisualStyleBackColor = true;
-            this.load_button.Click += new System.EventHandler(this.load_button_Click);
+            this.textBox2.Text = "Ore Secundar";
             // 
             // save_button
             // 
@@ -142,7 +131,7 @@
             this.comboBox3.Name = "comboBox3";
             this.comboBox3.Size = new System.Drawing.Size(121, 21);
             this.comboBox3.TabIndex = 8;
-            this.comboBox3.Text = "Ore recuperare";
+            this.comboBox3.Text = "Ore pregatire";
             // 
             // textBox3
             // 
@@ -151,7 +140,7 @@
             this.textBox3.ReadOnly = true;
             this.textBox3.Size = new System.Drawing.Size(90, 20);
             this.textBox3.TabIndex = 9;
-            this.textBox3.Text = "Ore Recuperare";
+            this.textBox3.Text = "Ore Pregatire";
             // 
             // panel2
             // 
@@ -159,13 +148,13 @@
             this.panel2.Controls.Add(this.pret_pregatire);
             this.panel2.Controls.Add(this.textBox15);
             this.panel2.Controls.Add(this.textBox6);
-            this.panel2.Controls.Add(this.pret_recuperare);
+            this.panel2.Controls.Add(this.pret_secundar);
             this.panel2.Controls.Add(this.textBox10);
             this.panel2.Controls.Add(this.textBox5);
-            this.panel2.Controls.Add(this.pret_curs);
+            this.panel2.Controls.Add(this.pret_principal);
             this.panel2.Controls.Add(this.pret_fixed);
             this.panel2.Controls.Add(this.go_back_2);
-            this.panel2.Location = new System.Drawing.Point(94, 12);
+            this.panel2.Location = new System.Drawing.Point(76, 12);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(364, 370);
             this.panel2.TabIndex = 4;
@@ -206,17 +195,17 @@
             this.textBox6.ReadOnly = true;
             this.textBox6.Size = new System.Drawing.Size(100, 20);
             this.textBox6.TabIndex = 13;
-            this.textBox6.Text = "Ore recuperare:";
+            this.textBox6.Text = "Ore secundar:";
             this.textBox6.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
-            // pret_recuperare
+            // pret_secundar
             // 
-            this.pret_recuperare.Location = new System.Drawing.Point(185, 180);
-            this.pret_recuperare.Name = "pret_recuperare";
-            this.pret_recuperare.Size = new System.Drawing.Size(100, 20);
-            this.pret_recuperare.TabIndex = 11;
-            this.pret_recuperare.Text = "0";
-            this.pret_recuperare.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.pret_secundar.Location = new System.Drawing.Point(185, 180);
+            this.pret_secundar.Name = "pret_secundar";
+            this.pret_secundar.Size = new System.Drawing.Size(100, 20);
+            this.pret_secundar.TabIndex = 11;
+            this.pret_secundar.Text = "0";
+            this.pret_secundar.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // textBox10
             // 
@@ -235,17 +224,17 @@
             this.textBox5.ReadOnly = true;
             this.textBox5.Size = new System.Drawing.Size(100, 20);
             this.textBox5.TabIndex = 8;
-            this.textBox5.Text = "Ore curs:";
+            this.textBox5.Text = "Ore principal:";
             this.textBox5.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
-            // pret_curs
+            // pret_principal
             // 
-            this.pret_curs.Location = new System.Drawing.Point(185, 62);
-            this.pret_curs.Name = "pret_curs";
-            this.pret_curs.Size = new System.Drawing.Size(100, 20);
-            this.pret_curs.TabIndex = 6;
-            this.pret_curs.Text = "0";
-            this.pret_curs.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.pret_principal.Location = new System.Drawing.Point(185, 62);
+            this.pret_principal.Name = "pret_principal";
+            this.pret_principal.Size = new System.Drawing.Size(100, 20);
+            this.pret_principal.TabIndex = 6;
+            this.pret_principal.Text = "0";
+            this.pret_principal.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // pret_fixed
             // 
@@ -377,7 +366,6 @@
             this.Controls.Add(this.textBox3);
             this.Controls.Add(this.comboBox3);
             this.Controls.Add(this.save_button);
-            this.Controls.Add(this.load_button);
             this.Controls.Add(this.textBox2);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.add_button);
@@ -404,14 +392,13 @@
         private System.Windows.Forms.Button add_button;
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.TextBox textBox2;
-        private System.Windows.Forms.Button load_button;
         private System.Windows.Forms.Button save_button;
         private System.Windows.Forms.ComboBox comboBox3;
         private System.Windows.Forms.TextBox textBox3;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
         private System.Windows.Forms.SaveFileDialog saveFileDialog1;
         private System.Windows.Forms.Panel panel2;
-        private System.Windows.Forms.TextBox pret_curs;
+        private System.Windows.Forms.TextBox pret_principal;
         private System.Windows.Forms.TextBox pret_fixed;
         private System.Windows.Forms.Button go_back_2;
         private System.Windows.Forms.Button enter_pret;
@@ -419,7 +406,7 @@
         private System.Windows.Forms.TextBox pret_pregatire;
         private System.Windows.Forms.TextBox textBox15;
         private System.Windows.Forms.TextBox textBox6;
-        private System.Windows.Forms.TextBox pret_recuperare;
+        private System.Windows.Forms.TextBox pret_secundar;
         private System.Windows.Forms.TextBox textBox10;
         private System.Windows.Forms.TextBox textBox5;
         private System.Windows.Forms.TextBox ora_inceput_text;
