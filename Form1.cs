@@ -48,9 +48,6 @@ namespace WindowsFormsApp1
             elements = new List<WorkStuff>();
 
             save_button.Enabled = false;
-            get_hours_normal.Enabled = false;
-            get_hours_custom.Enabled = false;
-            panel1.Hide();
             panel2.Hide();
         }
 
@@ -101,7 +98,6 @@ namespace WindowsFormsApp1
             MessageBox.Show("New data added!");
 
             save_button.Enabled = true;
-            get_hours_normal.Enabled = true;
         }
 
         private void load_button_Click(object sender, EventArgs e)
@@ -136,7 +132,6 @@ namespace WindowsFormsApp1
 
             load_button.Enabled = false;
             save_button.Enabled = true;
-            get_hours_normal.Enabled = true;
         }
 
         private void save_button_Click(object sender, EventArgs e)
@@ -158,32 +153,6 @@ namespace WindowsFormsApp1
                 saveTable(saveFileDialog.FileName);
         }
 
-        private void browse_Click(object sender, EventArgs e)
-        {
-            OpenFileDialog openFileDialog;
-
-            openFileDialog = new OpenFileDialog
-            {
-                Title = "Browse Excel Files",
-                CheckFileExists = true,
-                CheckPathExists = true,
-
-                DefaultExt = "xlsx",
-                Filter = "xlsx files (*.xlsx)|*.xlsx",
-                FilterIndex = 2,
-                RestoreDirectory = true,
-
-                ReadOnlyChecked = true,
-                ShowReadOnly = true
-            };
-
-            if (openFileDialog.ShowDialog() == DialogResult.OK)
-            {
-                textBox4.Text = openFileDialog.FileName;
-                get_hours_custom.Enabled = true;
-            }
-        }
-
         private void get_hours_normal_Click(object sender, EventArgs e)
         {
             MessageBox.Show(getTotalHours(elements, 0));
@@ -191,7 +160,6 @@ namespace WindowsFormsApp1
 
         private void enter_get_hours_custom_Click(object sender, EventArgs e)
         {
-            panel1.Show();
             hideCommon();
         }
 
@@ -204,7 +172,6 @@ namespace WindowsFormsApp1
         private void go_back_Click(object sender, EventArgs e)
         {
             showCommon();
-            panel1.Hide();
         }
 
         private void go_back_2_Click(object sender, EventArgs e)
@@ -213,23 +180,9 @@ namespace WindowsFormsApp1
             panel2.Hide();
         }
 
-        private void get_hours_custom_Click(object sender, EventArgs e)
-        {
-            List<WorkStuff> custom_elements = new List<WorkStuff>();
-            ExcelFile loadedFile;
-
-            loadedFile = ExcelFile.Load(textBox4.Text);
-
-            loadFile(loadedFile, ref custom_elements, false, false);
-
-            MessageBox.Show(getTotalHours(custom_elements, 0));
-        }
-
         private void hideCommon()
         {
             save_button.Hide();
-            get_hours_normal.Hide();
-            enter_get_hours_custom.Hide();
             enter_pret.Hide();
             ora_inceput_box.Hide();
             ora_inceput_text.Hide();
@@ -244,8 +197,6 @@ namespace WindowsFormsApp1
         private void showCommon()
         {
             save_button.Show();
-            get_hours_normal.Show();
-            enter_get_hours_custom.Show();
             enter_pret.Show();
             ora_inceput_box.Show();
             ora_inceput_text.Show();

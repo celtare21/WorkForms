@@ -38,12 +38,6 @@
             this.save_button = new System.Windows.Forms.Button();
             this.comboBox3 = new System.Windows.Forms.ComboBox();
             this.textBox3 = new System.Windows.Forms.TextBox();
-            this.get_hours_normal = new System.Windows.Forms.Button();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.get_hours_custom = new System.Windows.Forms.Button();
-            this.go_back = new System.Windows.Forms.Button();
-            this.textBox4 = new System.Windows.Forms.TextBox();
-            this.browse = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
             this.textBox11 = new System.Windows.Forms.TextBox();
             this.pret_pregatire = new System.Windows.Forms.TextBox();
@@ -56,7 +50,6 @@
             this.pret_fixed = new System.Windows.Forms.TextBox();
             this.go_back_2 = new System.Windows.Forms.Button();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
-            this.enter_get_hours_custom = new System.Windows.Forms.Button();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.enter_pret = new System.Windows.Forms.Button();
             this.ora_inceput_text = new System.Windows.Forms.TextBox();
@@ -67,7 +60,6 @@
             this.thursday = new System.Windows.Forms.CheckBox();
             this.friday = new System.Windows.Forms.CheckBox();
             this.saturday = new System.Windows.Forms.CheckBox();
-            this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -161,64 +153,6 @@
             this.textBox3.TabIndex = 9;
             this.textBox3.Text = "Ore Recuperare";
             // 
-            // get_hours_normal
-            // 
-            this.get_hours_normal.Location = new System.Drawing.Point(155, 325);
-            this.get_hours_normal.Name = "get_hours_normal";
-            this.get_hours_normal.Size = new System.Drawing.Size(75, 23);
-            this.get_hours_normal.TabIndex = 10;
-            this.get_hours_normal.Text = "Get Hours";
-            this.get_hours_normal.UseVisualStyleBackColor = true;
-            this.get_hours_normal.Click += new System.EventHandler(this.get_hours_normal_Click);
-            // 
-            // panel1
-            // 
-            this.panel1.Controls.Add(this.get_hours_custom);
-            this.panel1.Controls.Add(this.go_back);
-            this.panel1.Controls.Add(this.textBox4);
-            this.panel1.Controls.Add(this.browse);
-            this.panel1.Location = new System.Drawing.Point(60, 15);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(432, 333);
-            this.panel1.TabIndex = 11;
-            // 
-            // get_hours_custom
-            // 
-            this.get_hours_custom.Location = new System.Drawing.Point(56, 265);
-            this.get_hours_custom.Name = "get_hours_custom";
-            this.get_hours_custom.Size = new System.Drawing.Size(75, 23);
-            this.get_hours_custom.TabIndex = 3;
-            this.get_hours_custom.Text = "Get Hours";
-            this.get_hours_custom.UseVisualStyleBackColor = true;
-            this.get_hours_custom.Click += new System.EventHandler(this.get_hours_custom_Click);
-            // 
-            // go_back
-            // 
-            this.go_back.Location = new System.Drawing.Point(337, 268);
-            this.go_back.Name = "go_back";
-            this.go_back.Size = new System.Drawing.Size(75, 23);
-            this.go_back.TabIndex = 2;
-            this.go_back.Text = "Go Back";
-            this.go_back.UseVisualStyleBackColor = true;
-            this.go_back.Click += new System.EventHandler(this.go_back_Click);
-            // 
-            // textBox4
-            // 
-            this.textBox4.Location = new System.Drawing.Point(56, 139);
-            this.textBox4.Name = "textBox4";
-            this.textBox4.Size = new System.Drawing.Size(249, 20);
-            this.textBox4.TabIndex = 1;
-            // 
-            // browse
-            // 
-            this.browse.Location = new System.Drawing.Point(342, 136);
-            this.browse.Name = "browse";
-            this.browse.Size = new System.Drawing.Size(75, 23);
-            this.browse.TabIndex = 0;
-            this.browse.Text = "Browse";
-            this.browse.UseVisualStyleBackColor = true;
-            this.browse.Click += new System.EventHandler(this.browse_Click);
-            // 
             // panel2
             // 
             this.panel2.Controls.Add(this.textBox11);
@@ -231,7 +165,7 @@
             this.panel2.Controls.Add(this.pret_curs);
             this.panel2.Controls.Add(this.pret_fixed);
             this.panel2.Controls.Add(this.go_back_2);
-            this.panel2.Location = new System.Drawing.Point(94, 1);
+            this.panel2.Location = new System.Drawing.Point(94, 12);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(364, 370);
             this.panel2.TabIndex = 4;
@@ -337,19 +271,9 @@
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
             // 
-            // enter_get_hours_custom
-            // 
-            this.enter_get_hours_custom.Location = new System.Drawing.Point(155, 359);
-            this.enter_get_hours_custom.Name = "enter_get_hours_custom";
-            this.enter_get_hours_custom.Size = new System.Drawing.Size(121, 23);
-            this.enter_get_hours_custom.TabIndex = 12;
-            this.enter_get_hours_custom.Text = "Get Hours Custom";
-            this.enter_get_hours_custom.UseVisualStyleBackColor = true;
-            this.enter_get_hours_custom.Click += new System.EventHandler(this.enter_get_hours_custom_Click);
-            // 
             // enter_pret
             // 
-            this.enter_pret.Location = new System.Drawing.Point(307, 359);
+            this.enter_pret.Location = new System.Drawing.Point(155, 325);
             this.enter_pret.Name = "enter_pret";
             this.enter_pret.Size = new System.Drawing.Size(75, 23);
             this.enter_pret.TabIndex = 13;
@@ -447,12 +371,9 @@
             this.Controls.Add(this.wednesday);
             this.Controls.Add(this.tuesday);
             this.Controls.Add(this.monday);
-            this.Controls.Add(this.panel1);
             this.Controls.Add(this.ora_inceput_box);
             this.Controls.Add(this.ora_inceput_text);
             this.Controls.Add(this.enter_pret);
-            this.Controls.Add(this.enter_get_hours_custom);
-            this.Controls.Add(this.get_hours_normal);
             this.Controls.Add(this.textBox3);
             this.Controls.Add(this.comboBox3);
             this.Controls.Add(this.save_button);
@@ -468,8 +389,6 @@
             this.Name = "Form1";
             this.Text = "Tabel";
             this.Load += new System.EventHandler(this.Form1_Load);
-            this.panel1.ResumeLayout(false);
-            this.panel1.PerformLayout();
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
             this.ResumeLayout(false);
@@ -489,14 +408,7 @@
         private System.Windows.Forms.Button save_button;
         private System.Windows.Forms.ComboBox comboBox3;
         private System.Windows.Forms.TextBox textBox3;
-        private System.Windows.Forms.Button get_hours_normal;
-        private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
-        private System.Windows.Forms.Button browse;
-        private System.Windows.Forms.TextBox textBox4;
-        private System.Windows.Forms.Button enter_get_hours_custom;
-        private System.Windows.Forms.Button go_back;
-        private System.Windows.Forms.Button get_hours_custom;
         private System.Windows.Forms.SaveFileDialog saveFileDialog1;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.TextBox pret_curs;
