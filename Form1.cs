@@ -435,7 +435,15 @@ namespace WindowsFormsApp1
             if (rows)
                 total_rows = 0;
 
-            worksheet = file.Worksheets[1];
+            try
+            {
+                worksheet = file.Worksheets[1];
+            }
+            catch(ArgumentOutOfRangeException)
+            {
+                MessageBox.Show("No Demo spreadsheet found! Run the initial software!");
+                Environment.Exit(0);
+            }
 
             if (pret)
                 loadPret(worksheet);
