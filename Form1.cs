@@ -123,8 +123,6 @@ namespace WindowsFormsApp1
             if (openFileDialog.ShowDialog() != DialogResult.OK)
                 return;
 
-            new_file = false;
-
             loadedFile = ExcelFile.Load(openFileDialog.FileName);
 
             loadFile(loadedFile, true, true);
@@ -201,7 +199,7 @@ namespace WindowsFormsApp1
             worksheet.Columns[0].SetWidth(140, LengthUnit.Pixel);
             worksheet.Columns[1].SetWidth(110, LengthUnit.Pixel);
             worksheet.Columns[2].SetWidth(100, LengthUnit.Pixel);
-            worksheet.Columns[3].SetWidth(120, LengthUnit.Pixel);
+            worksheet.Columns[3].SetWidth(140, LengthUnit.Pixel);
             worksheet.Columns[4].SetWidth(120, LengthUnit.Pixel);
             worksheet.Columns[5].SetWidth(140, LengthUnit.Pixel);
             worksheet.Columns[6].SetWidth(90, LengthUnit.Pixel);
@@ -221,6 +219,9 @@ namespace WindowsFormsApp1
             worksheet.Cells[60, 2].Value = "PRET/H";
             worksheet.Cells[60, 3].Value = "INDICE";
             worksheet.Cells[60, 4].Value = "VALOARE";
+
+            worksheet.Cells[64, 3].Value = "TOTAL DEMO:";
+            worksheet.Cells[65, 3].Value = "TOTAL ORE + DEMO:";
         }
 
         private void addNewItemsOnDay(string day)
@@ -378,6 +379,7 @@ namespace WindowsFormsApp1
         {
             Table table_main, table_little;
             int i;
+            double total_ore = 0;
 
             if (worksheet.Tables.Count > 0)
                 for (i = 0; i <= worksheet.Tables.Count; i++)
@@ -408,6 +410,15 @@ namespace WindowsFormsApp1
             worksheet.Cells[63, 3].Value = getTotalHoursDouble(3);
             worksheet.Cells[63, 4].Value = Convert.ToDouble(pret_pregatire.Text) * getTotalHoursDouble(3);
             worksheet.Cells[64, 4].Value = Convert.ToDouble(worksheet.Cells[61, 4].Value) + Convert.ToDouble(worksheet.Cells[62, 4].Value) + Convert.ToDouble(worksheet.Cells[63, 4].Value);
+
+            worksheet = loadedFile.Worksheets[0];
+
+            if (worksheet.Cells[64, 4].ValueType == CellValueType.Double || worksheet.Cells[64, 4].ValueType == CellValueType.Int)
+                total_ore = Convert.ToDouble(worksheet.Cells[64, 4].Value);
+
+            worksheet = loadedFile.Worksheets[1];
+
+            worksheet.Cells[65, 4].Value = Convert.ToDouble(worksheet.Cells[61, 4].Value) + Convert.ToDouble(worksheet.Cells[62, 4].Value) + Convert.ToDouble(worksheet.Cells[63, 4].Value) + total_ore;
 
             loadedFile.Save(path);
 
