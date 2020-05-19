@@ -126,7 +126,7 @@ namespace WindowsFormsApp1
 
             loadedFile = ExcelFile.Load(openFileDialog.FileName);
 
-            loadFile(loadedFile, true, true);
+            loadFile(loadedFile);
 
             MessageBox.Show("File loaded!");
 
@@ -223,6 +223,8 @@ namespace WindowsFormsApp1
             worksheet.Cells[60, 2].Value = "PRET/H";
             worksheet.Cells[60, 3].Value = "INDICE";
             worksheet.Cells[60, 4].Value = "VALOARE";
+
+            worksheet.Cells[64, 3].Value = "TOTAL ORE:";
         }
 
         private void addNewItemsOnDay(string day)
@@ -242,9 +244,7 @@ namespace WindowsFormsApp1
             int days = DateTime.DaysInMonth(Constants.current_year, Constants.current_month);
 
             for (int day = 1; day <= days; day++)
-            {
                 yield return new DateTime(Constants.current_year, Constants.current_month, day);
-            }
         }
 
         private bool isCheckBoxSelected()
@@ -423,20 +423,19 @@ namespace WindowsFormsApp1
             MessageBox.Show("Data saved!");
         }
 
-        private void loadFile(ExcelFile file, bool rows, bool pret)
+        private void loadFile(ExcelFile file)
         {
             string day = null, start_hour = null, stop_hour = null, final_hours = null, curs_hours = null, pregatire_hours = null, recuperare_hours = null;
             bool first_run = true;
             bool write = false;
             int j = 0;
 
-            if (rows)
-                total_rows = 0;
+            total_rows = 0;
 
             worksheet = file.Worksheets[0];
 
-            if (pret)
-                loadPret(worksheet);
+            loadPret(worksheet);
+
             foreach (ExcelRow row in worksheet.Rows)
             {
                 if (!first_run)
@@ -455,8 +454,7 @@ namespace WindowsFormsApp1
                     if (write)
                     {
                         elements.Add(new WorkStuff(day, start_hour, stop_hour, curs_hours, pregatire_hours, recuperare_hours, final_hours));
-                        if (rows)
-                            ++total_rows;
+                        ++total_rows;
                         write = false;
                     }
                     j = 0;
