@@ -125,7 +125,7 @@ namespace WindowsFormsApp1
 
             loadedFile = ExcelFile.Load(openFileDialog.FileName);
 
-            loadFile(loadedFile, true, true);
+            loadFile(loadedFile);
 
             save_button.Enabled = true;
         }
@@ -241,9 +241,7 @@ namespace WindowsFormsApp1
             int days = DateTime.DaysInMonth(Constants.current_year, Constants.current_month);
 
             for (int day = 1; day <= days; day++)
-            {
                 yield return new DateTime(Constants.current_year, Constants.current_month, day);
-            }
         }
 
         private bool isCheckBoxSelected()
@@ -425,15 +423,14 @@ namespace WindowsFormsApp1
             MessageBox.Show("Data saved!");
         }
 
-        private void loadFile(ExcelFile file, bool rows, bool pret)
+        private void loadFile(ExcelFile file)
         {
             string day = null, start_hour = null, stop_hour = null, final_hours = null, principal_hours = null, secundar_hours = null, pregatire_hours = null;
             bool first_run = true;
             bool write = false;
             int j = 0;
 
-            if (rows)
-                total_rows = 0;
+            total_rows = 0;
 
             try
             {
@@ -445,8 +442,8 @@ namespace WindowsFormsApp1
                 Environment.Exit(0);
             }
 
-            if (pret)
-                loadPret(worksheet);
+            loadPret(worksheet);
+
             foreach (ExcelRow row in worksheet.Rows)
             {
                 if (!first_run)
@@ -465,8 +462,7 @@ namespace WindowsFormsApp1
                     if (write)
                     {
                         elements.Add(new WorkStuff(day, start_hour, stop_hour, principal_hours, secundar_hours, pregatire_hours, final_hours));
-                        if (rows)
-                            ++total_rows;
+                        ++total_rows;
                         write = false;
                     }
                     j = 0;
