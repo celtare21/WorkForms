@@ -13,7 +13,7 @@ namespace WindowsFormsApp1
         private ExcelFile loadedFile;
         private List<WorkStuff> elements;
         private bool new_file = true;
-        private static int total_rows;
+        private static int total_rows, last_total_rows;
         private double first_hour_entry;
 
         public Form1()
@@ -61,6 +61,8 @@ namespace WindowsFormsApp1
                 return;
             }
 
+            last_total_rows = total_rows;
+
             first_hour_entry = timeSpanToDouble(stringToTimeSpan(ora_inceput_box.Text));
 
             if (!isCheckBoxSelected())
@@ -98,6 +100,21 @@ namespace WindowsFormsApp1
             MessageBox.Show("New data added!");
 
             save_button.Enabled = true;
+        }
+
+        private void delete_button_Click(object sender, EventArgs e)
+        {
+            int diff = total_rows - last_total_rows;
+
+            if (diff == 0)
+            {
+                MessageBox.Show("No elements in list!");
+                return;
+            }
+
+            elements.RemoveRange(last_total_rows, diff);
+            total_rows = last_total_rows;
+            MessageBox.Show("Elements removed.");
         }
 
         private void load_button_Click(object sender, EventArgs e)
@@ -394,14 +411,17 @@ namespace WindowsFormsApp1
 
             populateTables();
 
-            sortByDate();
-            for (i = 0; i < total_rows; i++)
-                setLoad(i);
+            if (total_rows > 0)
+            {
+                sortByDate();
+                for (i = 0; i < total_rows; i++)
+                    setLoad(i);
 
-            table_main = worksheet.Tables.Add("TableMain", "A1:G" + (total_rows + 1).ToString(), true);
-            table_main.BuiltInStyle = BuiltInTableStyleName.TableStyleMedium2;
-            table_little = worksheet.Tables.Add("TableLittle", "A61:E64", true);
-            table_little.BuiltInStyle = BuiltInTableStyleName.TableStyleMedium2;
+                table_main = worksheet.Tables.Add("TableMain", "A1:G" + (total_rows + 1).ToString(), true);
+                table_main.BuiltInStyle = BuiltInTableStyleName.TableStyleMedium2;
+                table_little = worksheet.Tables.Add("TableLittle", "A61:E64", true);
+                table_little.BuiltInStyle = BuiltInTableStyleName.TableStyleMedium2;
+            }
 
             worksheet.Cells[60, 1].Value = getTotalHours(0);
             worksheet.Cells[61, 1].Value = getTotalHours(1);
