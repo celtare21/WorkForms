@@ -59,6 +59,7 @@
             this.thursday = new System.Windows.Forms.CheckBox();
             this.friday = new System.Windows.Forms.CheckBox();
             this.saturday = new System.Windows.Forms.CheckBox();
+            this.delete_button = new System.Windows.Forms.Button();
             this.panel2.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -348,11 +349,22 @@
             this.saturday.Text = "Saturday";
             this.saturday.UseVisualStyleBackColor = true;
             // 
+            // delete_button
+            // 
+            this.delete_button.Location = new System.Drawing.Point(307, 359);
+            this.delete_button.Name = "delete_button";
+            this.delete_button.Size = new System.Drawing.Size(75, 23);
+            this.delete_button.TabIndex = 22;
+            this.delete_button.Text = "Delete Last";
+            this.delete_button.UseVisualStyleBackColor = true;
+            this.delete_button.Click += new System.EventHandler(this.delete_button_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(543, 394);
+            this.Controls.Add(this.delete_button);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.saturday);
             this.Controls.Add(this.friday);
@@ -417,6 +429,7 @@
         private System.Windows.Forms.CheckBox thursday;
         private System.Windows.Forms.CheckBox friday;
         private System.Windows.Forms.CheckBox saturday;
+        private System.Windows.Forms.Button delete_button;
     }
 }
 
