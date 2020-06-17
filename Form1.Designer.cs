@@ -117,7 +117,7 @@
             // 
             // save_button
             // 
-            this.save_button.Location = new System.Drawing.Point(307, 325);
+            this.save_button.Location = new System.Drawing.Point(307, 287);
             this.save_button.Name = "save_button";
             this.save_button.Size = new System.Drawing.Size(75, 23);
             this.save_button.TabIndex = 7;
@@ -155,7 +155,7 @@
             this.panel2.Controls.Add(this.pret_principal);
             this.panel2.Controls.Add(this.pret_fixed);
             this.panel2.Controls.Add(this.go_back_2);
-            this.panel2.Location = new System.Drawing.Point(76, 12);
+            this.panel2.Location = new System.Drawing.Point(94, 12);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(364, 370);
             this.panel2.TabIndex = 4;
@@ -351,7 +351,7 @@
             // 
             // delete_button
             // 
-            this.delete_button.Location = new System.Drawing.Point(307, 359);
+            this.delete_button.Location = new System.Drawing.Point(307, 325);
             this.delete_button.Name = "delete_button";
             this.delete_button.Size = new System.Drawing.Size(75, 23);
             this.delete_button.TabIndex = 22;
@@ -364,7 +364,6 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(543, 394);
-            this.Controls.Add(this.delete_button);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.saturday);
             this.Controls.Add(this.friday);
@@ -384,6 +383,7 @@
             this.Controls.Add(this.comboBox2);
             this.Controls.Add(this.comboBox1);
             this.Controls.Add(this.monthCalendar1);
+            this.Controls.Add(this.delete_button);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.Name = "Form1";
