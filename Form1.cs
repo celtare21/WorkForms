@@ -191,8 +191,11 @@ namespace WindowsFormsApp1
         {
             save_button.Hide();
             enter_pret.Hide();
+            delete_button.Hide();
             ora_inceput_box.Hide();
             ora_inceput_text.Hide();
+            observatii_box.Hide();
+            observatii_text.Hide();
             monday.Hide();
             tuesday.Hide();
             wednesday.Hide();
@@ -205,8 +208,11 @@ namespace WindowsFormsApp1
         {
             save_button.Show();
             enter_pret.Show();
+            delete_button.Show();
             ora_inceput_box.Show();
             ora_inceput_text.Show();
+            observatii_box.Show();
+            observatii_text.Show();
             monday.Show();
             tuesday.Show();
             wednesday.Show();
@@ -224,6 +230,7 @@ namespace WindowsFormsApp1
             worksheet.Columns[4].SetWidth(120, LengthUnit.Pixel);
             worksheet.Columns[5].SetWidth(140, LengthUnit.Pixel);
             worksheet.Columns[6].SetWidth(90, LengthUnit.Pixel);
+            worksheet.Columns[7].SetWidth(140, LengthUnit.Pixel);
 
             worksheet.Cells[0, 0].Value = "Data";
             worksheet.Cells[0, 1].Value = "Ora incepere";
@@ -232,6 +239,7 @@ namespace WindowsFormsApp1
             worksheet.Cells[0, 4].Value = "Pregatire alocat";
             worksheet.Cells[0, 5].Value = "Recuperare alocat";
             worksheet.Cells[0, 6].Value = "Ora total";
+            worksheet.Cells[0, 7].Value = "Observatii";
 
             worksheet.Cells[60, 0].Value = "TOTAL:";
             worksheet.Cells[61, 0].Value = "TOTAL CURS:";
@@ -246,12 +254,13 @@ namespace WindowsFormsApp1
 
         private void addNewItemsOnDay(string day)
         {
-            string start_hour_final = null, stop_hour_final = null, stop_total_hour = null, curs_hours = null, pregatire_hours = null, recuperare_hours = null;
+            string start_hour_final = null, stop_hour_final = null, stop_total_hour = null, curs_hours = null, pregatire_hours = null, recuperare_hours = null, observatii = "";
 
             allHours(ref start_hour_final, ref stop_hour_final, ref stop_total_hour);
             otherHours(ref curs_hours, ref pregatire_hours, ref recuperare_hours);
+            getObservatii(ref observatii);
 
-            elements.Add(new WorkStuff(day, start_hour_final, stop_hour_final, curs_hours, pregatire_hours, recuperare_hours, stop_total_hour));
+            elements.Add(new WorkStuff(day, start_hour_final, stop_hour_final, curs_hours, pregatire_hours, recuperare_hours, stop_total_hour, observatii));
 
             ++total_rows;
         }
@@ -326,6 +335,11 @@ namespace WindowsFormsApp1
             curs_hours = transformHour(getCursHours());
             pregatire_hours = transformHour(getPregatireHours());
             recuperare_hours = transformHour(getRecuperareHours());
+        }
+
+        private void getObservatii(ref string observatii)
+        {
+            observatii = observatii_box.Text;
         }
 
         private string getTotalHours(int x)
@@ -417,7 +431,7 @@ namespace WindowsFormsApp1
                 for (i = 0; i < total_rows; i++)
                     setLoad(i);
 
-                table_main = worksheet.Tables.Add("TableMain", "A1:G" + (total_rows + 1).ToString(), true);
+                table_main = worksheet.Tables.Add("TableMain", "A1:H" + (total_rows + 1).ToString(), true);
                 table_main.BuiltInStyle = BuiltInTableStyleName.TableStyleMedium2;
                 table_little = worksheet.Tables.Add("TableLittle", "A61:E64", true);
                 table_little.BuiltInStyle = BuiltInTableStyleName.TableStyleMedium2;
@@ -445,7 +459,7 @@ namespace WindowsFormsApp1
 
         private void loadFile(ExcelFile file)
         {
-            string day = null, start_hour = null, stop_hour = null, final_hours = null, curs_hours = null, pregatire_hours = null, recuperare_hours = null;
+            string day = null, start_hour = null, stop_hour = null, final_hours = null, curs_hours = null, pregatire_hours = null, recuperare_hours = null, observatii = "";
             bool first_run = true;
             bool write = false;
             int j = 0;
@@ -466,14 +480,14 @@ namespace WindowsFormsApp1
                         {
                             if (String.Equals(cell.Value.ToString(), "TOTAL:".ToString()))
                                 return;
-                            setLoad(cell, j, ref day, ref start_hour, ref stop_hour, ref curs_hours, ref pregatire_hours, ref recuperare_hours, ref final_hours);
+                            setLoad(cell, j, ref day, ref start_hour, ref stop_hour, ref curs_hours, ref pregatire_hours, ref recuperare_hours, ref final_hours, ref observatii);
                             ++j;
                             write = true;
                         }
                     }
                     if (write)
                     {
-                        elements.Add(new WorkStuff(day, start_hour, stop_hour, curs_hours, pregatire_hours, recuperare_hours, final_hours));
+                        elements.Add(new WorkStuff(day, start_hour, stop_hour, curs_hours, pregatire_hours, recuperare_hours, final_hours, observatii));
                         ++total_rows;
                         write = false;
                     }
@@ -532,11 +546,14 @@ namespace WindowsFormsApp1
                     case 6:
                         worksheet.Cells[i + 1, j].Value = elements[i].total_hours;
                         break;
+                    case 7:
+                        worksheet.Cells[i + 1, j].Value = elements[i].observatii;
+                        break;
                 }
             }
         }
 
-        private void setLoad(ExcelCell cell, int j, ref string day, ref string start_hour, ref string stop_hour, ref string curs_hours, ref string pregatire_hours, ref string recuperare_hours, ref string final_hour)
+        private void setLoad(ExcelCell cell, int j, ref string day, ref string start_hour, ref string stop_hour, ref string curs_hours, ref string pregatire_hours, ref string recuperare_hours, ref string final_hour, ref string observatii)
         {
             switch (j)
             {
@@ -561,6 +578,9 @@ namespace WindowsFormsApp1
                 case 6:
                     final_hour = cell.Value.ToString();
                     break;
+                case 7:
+                    observatii = cell.Value.ToString();
+                    break;
             }
         }
     }
@@ -574,8 +594,9 @@ namespace WindowsFormsApp1
         public string pregatire_hours;
         public string recuperare_hours;
         public string total_hours;
+        public string observatii;
 
-        public WorkStuff(string day, string start_hour, string stop_hour, string curs_hours, string pregatire_hours, string recuperare_hours, string total_hours)
+        public WorkStuff(string day, string start_hour, string stop_hour, string curs_hours, string pregatire_hours, string recuperare_hours, string total_hours, string observatii)
         {
             this.day = day;
             this.start_hour = start_hour;
@@ -584,12 +605,13 @@ namespace WindowsFormsApp1
             this.pregatire_hours = pregatire_hours;
             this.recuperare_hours = recuperare_hours;
             this.total_hours = total_hours;
+            this.observatii = observatii;
         }
     }
 
     public static class Constants
     {
-        public const int entries = 7;
+        public const int entries = 8;
         public static int current_year = DateTime.Now.Year;
         public static int current_month = DateTime.Now.Month;
     }

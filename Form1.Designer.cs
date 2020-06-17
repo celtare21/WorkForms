@@ -61,6 +61,8 @@
             this.friday = new System.Windows.Forms.CheckBox();
             this.saturday = new System.Windows.Forms.CheckBox();
             this.delete_button = new System.Windows.Forms.Button();
+            this.observatii_text = new System.Windows.Forms.TextBox();
+            this.observatii_box = new System.Windows.Forms.TextBox();
             this.panel2.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -284,7 +286,7 @@
             // 
             // ora_inceput_text
             // 
-            this.ora_inceput_text.Location = new System.Drawing.Point(407, 192);
+            this.ora_inceput_text.Location = new System.Drawing.Point(417, 82);
             this.ora_inceput_text.Name = "ora_inceput_text";
             this.ora_inceput_text.ReadOnly = true;
             this.ora_inceput_text.Size = new System.Drawing.Size(100, 20);
@@ -294,7 +296,7 @@
             // 
             // ora_inceput_box
             // 
-            this.ora_inceput_box.Location = new System.Drawing.Point(407, 219);
+            this.ora_inceput_box.Location = new System.Drawing.Point(417, 108);
             this.ora_inceput_box.Name = "ora_inceput_box";
             this.ora_inceput_box.Size = new System.Drawing.Size(100, 20);
             this.ora_inceput_box.TabIndex = 15;
@@ -370,6 +372,23 @@
             this.delete_button.UseVisualStyleBackColor = true;
             this.delete_button.Click += new System.EventHandler(this.delete_button_Click);
             // 
+            // observatii_text
+            // 
+            this.observatii_text.Location = new System.Drawing.Point(417, 174);
+            this.observatii_text.Name = "observatii_text";
+            this.observatii_text.ReadOnly = true;
+            this.observatii_text.Size = new System.Drawing.Size(100, 20);
+            this.observatii_text.TabIndex = 23;
+            this.observatii_text.Text = "Observatii";
+            this.observatii_text.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // observatii_box
+            // 
+            this.observatii_box.Location = new System.Drawing.Point(417, 200);
+            this.observatii_box.Name = "observatii_box";
+            this.observatii_box.Size = new System.Drawing.Size(100, 20);
+            this.observatii_box.TabIndex = 24;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -396,6 +415,8 @@
             this.Controls.Add(this.comboBox2);
             this.Controls.Add(this.comboBox1);
             this.Controls.Add(this.monthCalendar1);
+            this.Controls.Add(this.observatii_text);
+            this.Controls.Add(this.observatii_box);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.Name = "Form1";
@@ -443,6 +464,8 @@
         private System.Windows.Forms.CheckBox friday;
         private System.Windows.Forms.CheckBox saturday;
         private System.Windows.Forms.Button delete_button;
+        private System.Windows.Forms.TextBox observatii_text;
+        private System.Windows.Forms.TextBox observatii_box;
     }
 }
 
