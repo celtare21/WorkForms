@@ -477,7 +477,15 @@ namespace WindowsFormsApp1
 
             worksheet.Cells[65, 4].Value = Convert.ToDouble(worksheet.Cells[61, 4].Value) + Convert.ToDouble(worksheet.Cells[62, 4].Value) + Convert.ToDouble(worksheet.Cells[63, 4].Value) + total_ore;
 
-            loadedFile.Save(path);
+            try
+            {
+                loadedFile.Save(path);
+            }
+            catch (System.IO.IOException)
+            {
+                MessageBox.Show("Please close the document before saving!");
+                return;
+            }
 
             MessageBox.Show("Data saved!");
         }
