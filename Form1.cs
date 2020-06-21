@@ -46,7 +46,8 @@ namespace WindowsFormsApp1
 
             elements = new List<WorkStuff>();
 
-            save_button.Enabled = false;
+            delete_button.Enabled = false;
+            delete_all_button.Enabled = false;
             panel2.Hide();
 
             loadOnStartup();
@@ -100,7 +101,23 @@ namespace WindowsFormsApp1
 
             MessageBox.Show("New data added!");
 
-            save_button.Enabled = true;
+            delete_button.Enabled = true;
+            delete_all_button.Enabled = true;
+        }
+
+        private void delete_all_button_Click(object sender, EventArgs e)
+        {
+            if (elements.Count == 0)
+            {
+                MessageBox.Show("No elements in the list!");
+                return;
+            }
+
+            elements.Clear();
+            total_rows = 0;
+            last_total_rows = 0;
+
+            MessageBox.Show("All elements removed!");
         }
 
         private void delete_button_Click(object sender, EventArgs e)
@@ -115,6 +132,7 @@ namespace WindowsFormsApp1
 
             elements.RemoveRange(last_total_rows, diff);
             total_rows = last_total_rows;
+
             MessageBox.Show("Elements removed.");
         }
 
@@ -144,7 +162,12 @@ namespace WindowsFormsApp1
 
             loadFile(loadedFile);
 
+            if (total_rows > 0)
+                last_total_rows = total_rows - 1;
+
             save_button.Enabled = true;
+            delete_button.Enabled = true;
+            delete_all_button.Enabled = true;
         }
 
         private void save_button_Click(object sender, EventArgs e)
@@ -188,6 +211,7 @@ namespace WindowsFormsApp1
             save_button.Hide();
             enter_pret.Hide();
             delete_button.Hide();
+            delete_all_button.Hide();
             ora_inceput_box.Hide();
             ora_inceput_text.Hide();
             observatii_box.Hide();
@@ -205,6 +229,7 @@ namespace WindowsFormsApp1
             save_button.Show();
             enter_pret.Show();
             delete_button.Show();
+            delete_all_button.Show();
             ora_inceput_box.Show();
             ora_inceput_text.Show();
             observatii_box.Show();
@@ -484,7 +509,7 @@ namespace WindowsFormsApp1
                 {
                     foreach (ExcelCell cell in row.AllocatedCells)
                     {
-                        if (cell.ValueType != CellValueType.Null)
+                        if (cell.ValueType != CellValueType.Null && cell.Value.ToString() != "")
                         {
                             if (String.Equals(cell.Value.ToString(), "TOTAL:".ToString()))
                                 return;
