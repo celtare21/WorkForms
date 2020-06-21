@@ -63,6 +63,7 @@
             this.delete_button = new System.Windows.Forms.Button();
             this.observatii_text = new System.Windows.Forms.TextBox();
             this.observatii_box = new System.Windows.Forms.TextBox();
+            this.delete_all_button = new System.Windows.Forms.Button();
             this.panel2.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -389,12 +390,21 @@
             this.observatii_box.Size = new System.Drawing.Size(100, 20);
             this.observatii_box.TabIndex = 24;
             // 
+            // delete_all_button
+            // 
+            this.delete_all_button.Location = new System.Drawing.Point(155, 359);
+            this.delete_all_button.Name = "delete_all_button";
+            this.delete_all_button.Size = new System.Drawing.Size(75, 23);
+            this.delete_all_button.TabIndex = 25;
+            this.delete_all_button.Text = "Delete All";
+            this.delete_all_button.UseVisualStyleBackColor = true;
+            this.delete_all_button.Click += new System.EventHandler(this.delete_all_button_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(543, 394);
-            this.Controls.Add(this.delete_button);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.saturday);
             this.Controls.Add(this.friday);
@@ -417,6 +427,8 @@
             this.Controls.Add(this.monthCalendar1);
             this.Controls.Add(this.observatii_text);
             this.Controls.Add(this.observatii_box);
+            this.Controls.Add(this.delete_button);
+            this.Controls.Add(this.delete_all_button);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.Name = "Form1";
@@ -466,6 +478,7 @@
         private System.Windows.Forms.Button delete_button;
         private System.Windows.Forms.TextBox observatii_text;
         private System.Windows.Forms.TextBox observatii_box;
+        private System.Windows.Forms.Button delete_all_button;
     }
 }
 
