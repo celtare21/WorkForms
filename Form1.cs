@@ -125,7 +125,7 @@ namespace WindowsFormsApp1
 
             if (diff == 0)
             {
-                MessageBox.Show("No elements in list!");
+                MessageBox.Show("No new modifications!");
                 return;
             }
 
@@ -435,6 +435,7 @@ namespace WindowsFormsApp1
         private void saveTable(string path)
         {
             Table table_main, table_little;
+            double total;
             int i;
 
             if (new_file)
@@ -476,6 +477,12 @@ namespace WindowsFormsApp1
             worksheet.Cells[63, 3].Value = getTotalHoursDouble(3);
             worksheet.Cells[63, 4].Value = Convert.ToDouble(pret_pregatire.Text) * getTotalHoursDouble(3);
             worksheet.Cells[64, 4].Value = Convert.ToDouble(worksheet.Cells[61, 4].Value) + Convert.ToDouble(worksheet.Cells[62, 4].Value) + Convert.ToDouble(worksheet.Cells[63, 4].Value);
+
+            total = Convert.ToDouble(worksheet.Cells[64, 4].Value);
+            worksheet = loadedFile.Worksheets[1];
+            if (worksheet.Cells[64, 4].ValueType == CellValueType.Double || worksheet.Cells[64, 4].ValueType == CellValueType.Int)
+                worksheet.Cells[65, 4].Value = Convert.ToDouble(worksheet.Cells[64, 4].Value) + total;
+            worksheet = loadedFile.Worksheets[0];
 
             try
             {
