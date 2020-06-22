@@ -126,7 +126,7 @@ namespace WindowsFormsApp1
 
             if (diff == 0)
             {
-                MessageBox.Show("No elements in list!");
+                MessageBox.Show("No new modifications!");
                 return;
             }
 
@@ -469,12 +469,9 @@ namespace WindowsFormsApp1
             worksheet.Cells[64, 4].Value = Convert.ToDouble(worksheet.Cells[61, 4].Value) + Convert.ToDouble(worksheet.Cells[62, 4].Value) + Convert.ToDouble(worksheet.Cells[63, 4].Value);
 
             worksheet = loadedFile.Worksheets[0];
-
             if (worksheet.Cells[64, 4].ValueType == CellValueType.Double || worksheet.Cells[64, 4].ValueType == CellValueType.Int)
                 total_ore = Convert.ToDouble(worksheet.Cells[64, 4].Value);
-
             worksheet = loadedFile.Worksheets[1];
-
             worksheet.Cells[65, 4].Value = Convert.ToDouble(worksheet.Cells[61, 4].Value) + Convert.ToDouble(worksheet.Cells[62, 4].Value) + Convert.ToDouble(worksheet.Cells[63, 4].Value) + total_ore;
 
             try
