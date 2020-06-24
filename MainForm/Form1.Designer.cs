@@ -63,6 +63,7 @@
             this.observatii_text = new System.Windows.Forms.TextBox();
             this.observatii_box = new System.Windows.Forms.TextBox();
             this.delete_all_button = new System.Windows.Forms.Button();
+            this.list_button = new System.Windows.Forms.Button();
             this.panel2.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -389,6 +390,16 @@
             this.delete_all_button.UseVisualStyleBackColor = true;
             this.delete_all_button.Click += new System.EventHandler(this.delete_all_button_Click);
             // 
+            // list_button
+            // 
+            this.list_button.Location = new System.Drawing.Point(431, 359);
+            this.list_button.Name = "list_button";
+            this.list_button.Size = new System.Drawing.Size(75, 23);
+            this.list_button.TabIndex = 26;
+            this.list_button.Text = "Show List";
+            this.list_button.UseVisualStyleBackColor = true;
+            this.list_button.Click += new System.EventHandler(this.list_button_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -417,6 +428,7 @@
             this.Controls.Add(this.observatii_box);
             this.Controls.Add(this.delete_button);
             this.Controls.Add(this.delete_all_button);
+            this.Controls.Add(this.list_button);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.Name = "Form1";
@@ -466,6 +478,7 @@
         private System.Windows.Forms.TextBox observatii_text;
         private System.Windows.Forms.TextBox observatii_box;
         private System.Windows.Forms.Button delete_all_button;
+        private System.Windows.Forms.Button list_button;
     }
 }
 

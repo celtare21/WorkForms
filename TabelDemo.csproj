@@ -41,6 +41,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -50,6 +51,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup>
     <ManifestCertificateThumbprint>81F06F79E2547CAC6EEF272C7649B1E216628B9D</ManifestCertificateThumbprint>
@@ -91,15 +93,24 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Form1.cs">
+    <Compile Include="ListForm\FormList.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form1.Designer.cs">
+    <Compile Include="ListForm\FormList.Designer.cs">
+      <DependentUpon>FormList.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MainForm\Form1.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainForm\Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Form1.resx">
+    <EmbeddedResource Include="ListForm\FormList.resx">
+      <DependentUpon>FormList.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MainForm\Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">

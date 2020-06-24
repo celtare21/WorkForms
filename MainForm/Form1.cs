@@ -4,6 +4,8 @@ using System.Windows.Forms;
 using System.Collections.Generic;
 using GemBox.Spreadsheet;
 using GemBox.Spreadsheet.Tables;
+using WindowsFormsApp1.ListForm;
+using System.Threading;
 
 namespace WindowsFormsApp1
 {
@@ -11,8 +13,9 @@ namespace WindowsFormsApp1
     {
         private ExcelWorksheet worksheet;
         private ExcelFile loadedFile;
-        private List<WorkStuff> elements;
-        private static int total_rows, last_total_rows;
+        public List<WorkStuff> elements;
+        public int total_rows;
+        private int last_total_rows;
         private double first_hour_entry;
 
         public Form1()
@@ -206,6 +209,14 @@ namespace WindowsFormsApp1
             panel2.Hide();
         }
 
+        private void list_button_Click(object sender, EventArgs e)
+        {
+            FormList window = new FormList(this);
+
+            sortByDate();
+            window.Show();
+        }
+
         private void hideCommon()
         {
             save_button.Hide();
@@ -216,6 +227,7 @@ namespace WindowsFormsApp1
             ora_inceput_text.Hide();
             observatii_box.Hide();
             observatii_text.Hide();
+            list_button.Hide();
             monday.Hide();
             tuesday.Hide();
             wednesday.Hide();
@@ -234,6 +246,7 @@ namespace WindowsFormsApp1
             ora_inceput_text.Show();
             observatii_box.Show();
             observatii_text.Show();
+            list_button.Show();
             monday.Show();
             tuesday.Show();
             wednesday.Show();
@@ -244,23 +257,25 @@ namespace WindowsFormsApp1
 
         private void populateTables()
         {
-            worksheet.Columns[0].SetWidth(140, LengthUnit.Pixel);
-            worksheet.Columns[1].SetWidth(110, LengthUnit.Pixel);
-            worksheet.Columns[2].SetWidth(100, LengthUnit.Pixel);
-            worksheet.Columns[3].SetWidth(140, LengthUnit.Pixel);
-            worksheet.Columns[4].SetWidth(120, LengthUnit.Pixel);
-            worksheet.Columns[5].SetWidth(140, LengthUnit.Pixel);
-            worksheet.Columns[6].SetWidth(90, LengthUnit.Pixel);
-            worksheet.Columns[7].SetWidth(140, LengthUnit.Pixel);
+            worksheet.Columns[0].SetWidth(120, LengthUnit.Pixel);
+            worksheet.Columns[1].SetWidth(140, LengthUnit.Pixel);
+            worksheet.Columns[2].SetWidth(110, LengthUnit.Pixel);
+            worksheet.Columns[3].SetWidth(100, LengthUnit.Pixel);
+            worksheet.Columns[4].SetWidth(140, LengthUnit.Pixel);
+            worksheet.Columns[5].SetWidth(120, LengthUnit.Pixel);
+            worksheet.Columns[6].SetWidth(140, LengthUnit.Pixel);
+            worksheet.Columns[7].SetWidth(90, LengthUnit.Pixel);
+            worksheet.Columns[8].SetWidth(140, LengthUnit.Pixel);
 
-            worksheet.Cells[0, 0].Value = "Data";
-            worksheet.Cells[0, 1].Value = "Ora incepere";
-            worksheet.Cells[0, 2].Value = "Ora sfarsit";
-            worksheet.Cells[0, 3].Value = "Pricipal alocat";
-            worksheet.Cells[0, 4].Value = "Secundar alocat";
-            worksheet.Cells[0, 5].Value = "Pregatire alocat";
-            worksheet.Cells[0, 6].Value = "Ora total";
-            worksheet.Cells[0, 7].Value = "Observatii";
+            worksheet.Cells[0, 0].Value = "ID";
+            worksheet.Cells[0, 1].Value = "Data";
+            worksheet.Cells[0, 2].Value = "Ora incepere";
+            worksheet.Cells[0, 3].Value = "Ora sfarsit";
+            worksheet.Cells[0, 4].Value = "Pricipal alocat";
+            worksheet.Cells[0, 5].Value = "Secundar alocat";
+            worksheet.Cells[0, 6].Value = "Pregatire alocat";
+            worksheet.Cells[0, 7].Value = "Ora total";
+            worksheet.Cells[0, 8].Value = "Observatii";
 
             worksheet.Cells[60, 0].Value = "TOTAL:";
             worksheet.Cells[61, 0].Value = "TOTAL PRINCIPAL:";
@@ -276,13 +291,13 @@ namespace WindowsFormsApp1
 
         private void addNewItemsOnDay(string day)
         {
-            string start_hour_final = null, stop_hour_final = null, stop_total_hour = null, principal_hours = null, secundar_hours = null, pregatire_hours = null, observatii = "";
+            string id = null, start_hour_final = null, stop_hour_final = null, stop_total_hour = null, principal_hours = null, secundar_hours = null, pregatire_hours = null, observatii = "";
 
             allHours(ref start_hour_final, ref stop_hour_final, ref stop_total_hour);
             otherHours(ref principal_hours, ref secundar_hours, ref pregatire_hours);
-            getObservatii(ref observatii);
+            getOthers(ref observatii, ref id);
 
-            elements.Add(new WorkStuff(day, start_hour_final, stop_hour_final, principal_hours, secundar_hours, pregatire_hours, stop_total_hour, observatii));
+            elements.Add(new WorkStuff(id, day, start_hour_final, stop_hour_final, principal_hours, secundar_hours, pregatire_hours, stop_total_hour, observatii));
 
             ++total_rows;
         }
@@ -359,9 +374,10 @@ namespace WindowsFormsApp1
             pregatire_hours = transformHour(getPregatireHours());
         }
 
-        private void getObservatii(ref string observatii)
+        private void getOthers(ref string observatii, ref string id)
         {
             observatii = observatii_box.Text;
+            id = CorrelationIdGenerator.GetNextId();
         }
 
         private string getTotalHours(int x)
@@ -447,7 +463,7 @@ namespace WindowsFormsApp1
                 for (i = 0; i < total_rows; i++)
                     setLoad(i);
 
-                table_main = worksheet.Tables.Add("TableMainDemo", "A1:H" + (total_rows + 1).ToString(), true);
+                table_main = worksheet.Tables.Add("TableMainDemo", "A1:I" + (total_rows + 1).ToString(), true);
                 table_main.BuiltInStyle = BuiltInTableStyleName.TableStyleMedium2;
                 table_little = worksheet.Tables.Add("TableLittleDemo", "A61:E64", true);
                 table_little.BuiltInStyle = BuiltInTableStyleName.TableStyleMedium2;
@@ -489,7 +505,7 @@ namespace WindowsFormsApp1
 
         private void loadFile(ExcelFile file)
         {
-            string day = null, start_hour = null, stop_hour = null, final_hours = null, principal_hours = null, secundar_hours = null, pregatire_hours = null, observatii = "";
+            string id = null, day = null, start_hour = null, stop_hour = null, final_hours = null, principal_hours = null, secundar_hours = null, pregatire_hours = null, observatii = "";
             bool first_run = true;
             bool write = false;
             int j = 0;
@@ -518,14 +534,14 @@ namespace WindowsFormsApp1
                         {
                             if (String.Equals(cell.Value.ToString(), "TOTAL:".ToString()))
                                 return;
-                            setLoad(cell, j, ref day, ref start_hour, ref stop_hour, ref principal_hours, ref secundar_hours, ref pregatire_hours, ref final_hours, ref observatii);
+                            setLoad(cell, j, ref id, ref day, ref start_hour, ref stop_hour, ref principal_hours, ref secundar_hours, ref pregatire_hours, ref final_hours, ref observatii);
                             ++j;
                             write = true;
                         }
                     }
                     if (write)
                     {
-                        elements.Add(new WorkStuff(day, start_hour, stop_hour, principal_hours, secundar_hours, pregatire_hours, final_hours, observatii));
+                        elements.Add(new WorkStuff(id, day, start_hour, stop_hour, principal_hours, secundar_hours, pregatire_hours, final_hours, observatii));
                         ++total_rows;
                         write = false;
                     }
@@ -564,59 +580,65 @@ namespace WindowsFormsApp1
                 switch (j)
                 {
                     case 0:
-                        worksheet.Cells[i + 1, j].Value = elements[i].day;
+                        worksheet.Cells[i + 1, j].Value = elements[i].id;
                         break;
                     case 1:
-                        worksheet.Cells[i + 1, j].Value = elements[i].start_hour;
+                        worksheet.Cells[i + 1, j].Value = elements[i].day;
                         break;
                     case 2:
-                        worksheet.Cells[i + 1, j].Value = elements[i].stop_hour;
+                        worksheet.Cells[i + 1, j].Value = elements[i].start_hour;
                         break;
                     case 3:
-                        worksheet.Cells[i + 1, j].Value = elements[i].principal_hours;
+                        worksheet.Cells[i + 1, j].Value = elements[i].stop_hour;
                         break;
                     case 4:
-                        worksheet.Cells[i + 1, j].Value = elements[i].secundar_hours;
+                        worksheet.Cells[i + 1, j].Value = elements[i].principal_hours;
                         break;
                     case 5:
-                        worksheet.Cells[i + 1, j].Value = elements[i].pregatire_hours;
+                        worksheet.Cells[i + 1, j].Value = elements[i].secundar_hours;
                         break;
                     case 6:
-                        worksheet.Cells[i + 1, j].Value = elements[i].total_hours;
+                        worksheet.Cells[i + 1, j].Value = elements[i].pregatire_hours;
                         break;
                     case 7:
+                        worksheet.Cells[i + 1, j].Value = elements[i].total_hours;
+                        break;
+                    case 8:
                         worksheet.Cells[i + 1, j].Value = elements[i].observatii;
                         break;
                 }
             }
         }
 
-        private void setLoad(ExcelCell cell, int j, ref string day, ref string start_hour, ref string stop_hour, ref string principal_hours, ref string secundar_hours, ref string pregatire_hours, ref string final_hour, ref string observatii)
+        private void setLoad(ExcelCell cell, int j, ref string id, ref string day, ref string start_hour, ref string stop_hour, ref string principal_hours, ref string secundar_hours, ref string pregatire_hours, ref string final_hour, ref string observatii)
         {
             switch (j)
             {
                 case 0:
-                    day = cell.Value.ToString();
+                    id = cell.Value.ToString();
                     break;
                 case 1:
-                    start_hour = cell.Value.ToString();
+                    day = cell.Value.ToString();
                     break;
                 case 2:
-                    stop_hour = cell.Value.ToString();
+                    start_hour = cell.Value.ToString();
                     break;
                 case 3:
-                    principal_hours = cell.Value.ToString();
+                    stop_hour = cell.Value.ToString();
                     break;
                 case 4:
-                    secundar_hours = cell.Value.ToString();
+                    principal_hours = cell.Value.ToString();
                     break;
                 case 5:
-                    pregatire_hours = cell.Value.ToString();
+                    secundar_hours = cell.Value.ToString();
                     break;
                 case 6:
-                    final_hour = cell.Value.ToString();
+                    pregatire_hours = cell.Value.ToString();
                     break;
                 case 7:
+                    final_hour = cell.Value.ToString();
+                    break;
+                case 8:
                     observatii = cell.Value.ToString();
                     break;
             }
@@ -625,6 +647,7 @@ namespace WindowsFormsApp1
 
     public class WorkStuff
     {
+        public string id;
         public string day;
         public string start_hour;
         public string stop_hour;
@@ -634,8 +657,9 @@ namespace WindowsFormsApp1
         public string total_hours;
         public string observatii;
 
-        public WorkStuff(string day, string start_hour, string stop_hour, string principal_hours, string secundar_hours, string pregatire_hours, string total_hours, string observatii)
+        public WorkStuff(string id, string day, string start_hour, string stop_hour, string principal_hours, string secundar_hours, string pregatire_hours, string total_hours, string observatii)
         {
+            this.id = id;
             this.day = day;
             this.start_hour = start_hour;
             this.stop_hour = stop_hour;
@@ -649,8 +673,37 @@ namespace WindowsFormsApp1
 
     public static class Constants
     {
-        public const int entries = 8;
+        public const int entries = 9;
         public static int current_year = DateTime.Now.Year;
         public static int current_month = DateTime.Now.Month;
+    }
+
+    internal static class CorrelationIdGenerator
+    {
+        private static readonly string _encode32Chars = "0123456789ABCDEFGHIJKLMNOPQRSTUV";
+
+        private static long _lastId = DateTime.UtcNow.Ticks;
+        public static string GetNextId() => GenerateId(Interlocked.Increment(ref _lastId));
+
+        private static unsafe string GenerateId(long id)
+        {
+            char* charBuffer = stackalloc char[13];
+
+            charBuffer[0] = _encode32Chars[(int)(id >> 60) & 31];
+            charBuffer[1] = _encode32Chars[(int)(id >> 55) & 31];
+            charBuffer[2] = _encode32Chars[(int)(id >> 50) & 31];
+            charBuffer[3] = _encode32Chars[(int)(id >> 45) & 31];
+            charBuffer[4] = _encode32Chars[(int)(id >> 40) & 31];
+            charBuffer[5] = _encode32Chars[(int)(id >> 35) & 31];
+            charBuffer[6] = _encode32Chars[(int)(id >> 30) & 31];
+            charBuffer[7] = _encode32Chars[(int)(id >> 25) & 31];
+            charBuffer[8] = _encode32Chars[(int)(id >> 20) & 31];
+            charBuffer[9] = _encode32Chars[(int)(id >> 15) & 31];
+            charBuffer[10] = _encode32Chars[(int)(id >> 10) & 31];
+            charBuffer[11] = _encode32Chars[(int)(id >> 5) & 31];
+            charBuffer[12] = _encode32Chars[(int)id & 31];
+
+            return new string(charBuffer, 0, 13);
+        }
     }
 }
