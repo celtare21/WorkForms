@@ -80,7 +80,8 @@ namespace WindowsFormsApp1
                 {
                     day = (i == 0) ? monthCalendar1.SelectionRange.Start.ToString("dd/MM/yyy") : monthCalendar1.SelectionRange.End.ToString("dd/MM/yyy");
 
-                    addNewItemsOnDay(day);
+                    if (addNewItemsOnDay(day) == -1)
+                        return;
                 }
             }
             else
@@ -97,7 +98,8 @@ namespace WindowsFormsApp1
                     if (day == null)
                         continue;
 
-                    addNewItemsOnDay(day);
+                    if (addNewItemsOnDay(day) == -1)
+                        return;
                 }
             }
 
@@ -292,20 +294,28 @@ namespace WindowsFormsApp1
             worksheet.Cells[64, 3].Value = "TOTAL ORE:";
         }
 
-        private void addNewItemsOnDay(string day)
+        private int addNewItemsOnDay(string day)
         {
             string id = null, start_hour_final = null, stop_hour_final = null, stop_total_hour = null, curs_hours = null, pregatire_hours = null, recuperare_hours = null, observatii = "";
+            int ret;
 
-            allHours(ref start_hour_final, ref stop_hour_final, ref stop_total_hour);
+            ret = allHours(ref start_hour_final, ref stop_hour_final, ref stop_total_hour);
+            if (ret == -1)
+            {
+                MessageBox.Show("Please try again!");
+                return ret;
+            }
             otherHours(ref curs_hours, ref pregatire_hours, ref recuperare_hours);
             getOthers(ref observatii, ref id);
 
             elements.Add(new WorkStuff(id, day, start_hour_final, stop_hour_final, curs_hours, pregatire_hours, recuperare_hours, stop_total_hour, observatii));
 
             ++total_rows;
+
+            return ret;
         }
 
-        public static IEnumerable<DateTime> AllDatesInMonth()
+        private static IEnumerable<DateTime> AllDatesInMonth()
         {
             int days = DateTime.DaysInMonth(Constants.current_year, Constants.current_month);
 
@@ -327,6 +337,7 @@ namespace WindowsFormsApp1
             timeSpan_hour = TimeSpan.FromHours(hour);
             string_hour = timeSpan_hour.ToString();
             result = Convert.ToDateTime(string_hour);
+
             return result.ToString("HH:mm", CultureInfo.CurrentCulture);
         }
 
@@ -337,7 +348,15 @@ namespace WindowsFormsApp1
 
             timeSpan_hour = TimeSpan.FromHours(hour);
             string_hour = timeSpan_hour.ToString();
-            result = Convert.ToDateTime(string_hour);
+            try
+            {
+                result = Convert.ToDateTime(string_hour);
+            }
+            catch (FormatException)
+            {
+                throw new HoursOutOfBounds();
+            }
+
             return result.ToString("HH:mm", CultureInfo.CurrentCulture);
         }
 
@@ -359,15 +378,24 @@ namespace WindowsFormsApp1
             return time.TotalHours;
         }
 
-        private void allHours(ref string start_hour_final, ref string stop_hour_final, ref string stop_total_hour)
+        private int allHours(ref string start_hour_final, ref string stop_hour_final, ref string stop_total_hour)
         {
             DateTime result1 = default, result2 = default;
             double final;
 
             start_hour_final = transformHour(first_hour_entry, ref result1);
-            stop_hour_final = transformHour(getFinalHour(), ref result2);
+            try
+            {
+                stop_hour_final = transformHour(getFinalHour(), ref result2);
+            }
+            catch (HoursOutOfBounds)
+            {
+                return -1;
+            }
             final = (result2 - result1).TotalHours;
             stop_total_hour = transformHour(final);
+
+            return 0;
         }
 
         private void otherHours(ref string curs_hours, ref string pregatire_hours, ref string recuperare_hours)
@@ -706,6 +734,14 @@ namespace WindowsFormsApp1
             charBuffer[12] = _encode32Chars[(int)id & 31];
 
             return new string(charBuffer, 0, 13);
+        }
+    }
+
+    public class HoursOutOfBounds : Exception
+    {
+        public HoursOutOfBounds()
+        {
+            MessageBox.Show("Too many hours in a day! Lower the starting time!");
         }
     }
 }
