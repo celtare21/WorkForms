@@ -29,6 +29,8 @@ namespace WindowsFormsApp1
 
             SpreadsheetInfo.SetLicense("FREE-LIMITED-KEY");
 
+            TopMost = true;
+
             monthCalendar1.MaxSelectionCount = 10;
 
             comboBox1.Items.AddRange(hours);
@@ -161,7 +163,10 @@ namespace WindowsFormsApp1
             };
 
             if (openFileDialog.ShowDialog() != DialogResult.OK)
-                return;
+            {
+                MessageBox.Show("No file loaded! Exiting!");
+                Environment.Exit(0);
+            }
 
             loadedFile = ExcelFile.Load(openFileDialog.FileName);
 
