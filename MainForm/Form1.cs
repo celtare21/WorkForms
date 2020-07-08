@@ -548,6 +548,9 @@ namespace WindowsFormsApp1
             bool write = false;
             int j = 0;
 
+            if (elements.Count > 0)
+                elements.Clear();
+
             total_rows = 0;
 
             worksheet = file.Worksheets[0];
