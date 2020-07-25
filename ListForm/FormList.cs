@@ -18,7 +18,7 @@ namespace WindowsFormsApp1.ListForm
         private void FormList_Load(object sender, EventArgs e)
         {
             string[] string_elements;
-            int i, j = 0;
+            int i, j = 0, k;
 
             elements_list.View = View.Details;
             elements_list.GridLines = true;
@@ -36,7 +36,7 @@ namespace WindowsFormsApp1.ListForm
 
             string_elements = new string[Constants.entries];
 
-            foreach (WorkStuff element in main_form.elements)
+            for (k = 0; k < main_form.elements.Count; k++)
             {
                 ListViewItem itm;
 
@@ -65,7 +65,7 @@ namespace WindowsFormsApp1.ListForm
             elements_list.SelectedItems[0].Remove();
 
             for (i = 0; i < main_form.elements.Count; i++)
-                if (id == main_form.elements[i].id)
+                if (string.Compare(id, main_form.elements[i].id) == 1)
                 {
                     main_form.elements.RemoveAt(i);
                     --main_form.total_rows;

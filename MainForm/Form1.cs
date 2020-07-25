@@ -1,11 +1,10 @@
-﻿using System;
+﻿using GemBox.Spreadsheet;
+using GemBox.Spreadsheet.Tables;
+using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Windows.Forms;
-using System.Collections.Generic;
-using GemBox.Spreadsheet;
-using GemBox.Spreadsheet.Tables;
 using WindowsFormsApp1.ListForm;
-using System.Threading;
 
 namespace WindowsFormsApp1
 {
@@ -62,7 +61,7 @@ namespace WindowsFormsApp1
         {
             string day;
 
-            if (comboBox1.Text == "0" && comboBox2.Text == "0" && comboBox3.Text == "0")
+            if (string.Compare(comboBox1.Text, "0") == 1 && string.Compare(comboBox2.Text, "0") == 1 && string.Compare(comboBox3.Text, "0") == 1)
             {
                 MessageBox.Show("No hours chosen!");
                 return;
@@ -205,11 +204,6 @@ namespace WindowsFormsApp1
             hideCommon();
         }
 
-        private void go_back_Click(object sender, EventArgs e)
-        {
-            showCommon();
-        }
-
         private void go_back_2_Click(object sender, EventArgs e)
         {
             showCommon();
@@ -298,7 +292,7 @@ namespace WindowsFormsApp1
 
         private int addNewItemsOnDay(string day)
         {
-            string id = null, start_hour_final = null, stop_hour_final = null, stop_total_hour = null, principal_hours = null, secundar_hours = null, pregatire_hours = null, observatii = "";
+            string id = null, start_hour_final = null, stop_hour_final = null, stop_total_hour = null, principal_hours = null, secundar_hours = null, pregatire_hours = null, observatii = string.Empty;
             int ret;
 
             ret = allHours(ref start_hour_final, ref stop_hour_final, ref stop_total_hour);
@@ -496,7 +490,7 @@ namespace WindowsFormsApp1
                 for (i = 0; i < total_rows; i++)
                     setLoad(i);
 
-                table_main = worksheet.Tables.Add("TableMainDemo", "A1:I" + (total_rows + 1).ToString(), true);
+                table_main = worksheet.Tables.Add("TableMainDemo", $"A1:I{total_rows + 1}", true);
                 table_main.BuiltInStyle = BuiltInTableStyleName.TableStyleMedium2;
                 table_little = worksheet.Tables.Add("TableLittleDemo", "A61:E64", true);
                 table_little.BuiltInStyle = BuiltInTableStyleName.TableStyleMedium2;
@@ -538,7 +532,7 @@ namespace WindowsFormsApp1
 
         private void loadFile(ExcelFile file)
         {
-            string id = null, day = null, start_hour = null, stop_hour = null, final_hours = null, principal_hours = null, secundar_hours = null, pregatire_hours = null, observatii = "";
+            string id = null, day = null, start_hour = null, stop_hour = null, final_hours = null, principal_hours = null, secundar_hours = null, pregatire_hours = null, observatii = string.Empty;
             bool first_run = true;
             bool write = false;
             int j = 0;
@@ -549,7 +543,7 @@ namespace WindowsFormsApp1
             {
                 worksheet = file.Worksheets[1];
             }
-            catch(ArgumentOutOfRangeException)
+            catch (ArgumentOutOfRangeException)
             {
                 MessageBox.Show("No Demo spreadsheet found! Run the initial software!");
                 Environment.Exit(0);
@@ -563,7 +557,7 @@ namespace WindowsFormsApp1
                 {
                     foreach (ExcelCell cell in row.AllocatedCells)
                     {
-                        if (cell.ValueType != CellValueType.Null && cell.Value.ToString() != "")
+                        if (cell.ValueType != CellValueType.Null && cell.Value.ToString() != string.Empty)
                         {
                             if (String.Equals(cell.Value.ToString(), "TOTAL:".ToString()))
                                 return;
@@ -675,76 +669,6 @@ namespace WindowsFormsApp1
                     observatii = cell.Value.ToString();
                     break;
             }
-        }
-    }
-
-    public class WorkStuff
-    {
-        public string id;
-        public string day;
-        public string start_hour;
-        public string stop_hour;
-        public string principal_hours;
-        public string secundar_hours;
-        public string pregatire_hours;
-        public string total_hours;
-        public string observatii;
-
-        public WorkStuff(string id, string day, string start_hour, string stop_hour, string principal_hours, string secundar_hours, string pregatire_hours, string total_hours, string observatii)
-        {
-            this.id = id;
-            this.day = day;
-            this.start_hour = start_hour;
-            this.stop_hour = stop_hour;
-            this.principal_hours = principal_hours;
-            this.secundar_hours = secundar_hours;
-            this.pregatire_hours = pregatire_hours;
-            this.total_hours = total_hours;
-            this.observatii = observatii;
-        }
-    }
-
-    public static class Constants
-    {
-        public const int entries = 9;
-        public static int current_year = DateTime.Now.Year;
-        public static int current_month = DateTime.Now.Month;
-    }
-
-    internal static class CorrelationIdGenerator
-    {
-        private static readonly string _encode32Chars = "0123456789ABCDEFGHIJKLMNOPQRSTUV";
-
-        private static long _lastId = DateTime.UtcNow.Ticks;
-        public static string GetNextId() => GenerateId(Interlocked.Increment(ref _lastId));
-
-        private static unsafe string GenerateId(long id)
-        {
-            char* charBuffer = stackalloc char[13];
-
-            charBuffer[0] = _encode32Chars[(int)(id >> 60) & 31];
-            charBuffer[1] = _encode32Chars[(int)(id >> 55) & 31];
-            charBuffer[2] = _encode32Chars[(int)(id >> 50) & 31];
-            charBuffer[3] = _encode32Chars[(int)(id >> 45) & 31];
-            charBuffer[4] = _encode32Chars[(int)(id >> 40) & 31];
-            charBuffer[5] = _encode32Chars[(int)(id >> 35) & 31];
-            charBuffer[6] = _encode32Chars[(int)(id >> 30) & 31];
-            charBuffer[7] = _encode32Chars[(int)(id >> 25) & 31];
-            charBuffer[8] = _encode32Chars[(int)(id >> 20) & 31];
-            charBuffer[9] = _encode32Chars[(int)(id >> 15) & 31];
-            charBuffer[10] = _encode32Chars[(int)(id >> 10) & 31];
-            charBuffer[11] = _encode32Chars[(int)(id >> 5) & 31];
-            charBuffer[12] = _encode32Chars[(int)id & 31];
-
-            return new string(charBuffer, 0, 13);
-        }
-    }
-
-    public class HoursOutOfBounds : Exception
-    {
-        public HoursOutOfBounds()
-        {
-            MessageBox.Show("Too many hours in a day! Lower the starting time!");
         }
     }
 }
