@@ -1,11 +1,11 @@
 ﻿using System;
-using System.Globalization;
-using System.Windows.Forms;
 using System.Collections.Generic;
+using System.Globalization;
+using System.Threading;
+using System.Windows.Forms;
+using WindowsFormsApp1.ListForm;
 using GemBox.Spreadsheet;
 using GemBox.Spreadsheet.Tables;
-using WindowsFormsApp1.ListForm;
-using System.Threading;
 
 namespace WindowsFormsApp1
 {
@@ -59,7 +59,7 @@ namespace WindowsFormsApp1
         {
             string day;
 
-            if (comboBox1.Text == "0" && comboBox2.Text == "0" && comboBox3.Text == "0")
+            if (string.Compare(comboBox1.Text, "0") == 1 && string.Compare(comboBox2.Text, "0") == 1 && string.Compare(comboBox3.Text, "0") == 1)
             {
                 MessageBox.Show("No hours chosen!");
                 return;
@@ -202,11 +202,6 @@ namespace WindowsFormsApp1
         {
             panel2.Show();
             hideCommon();
-        }
-
-        private void go_back_Click(object sender, EventArgs e)
-        {
-            showCommon();
         }
 
         private void go_back_2_Click(object sender, EventArgs e)
@@ -501,7 +496,7 @@ namespace WindowsFormsApp1
                 for (i = 0; i < total_rows; i++)
                     setLoad(i);
 
-                table_main = worksheet.Tables.Add("TableMain", "A1:I" + (total_rows + 1).ToString(), true);
+                table_main = worksheet.Tables.Add("TableMain", $"A1:I{total_rows + 1}", true);
                 table_main.BuiltInStyle = BuiltInTableStyleName.TableStyleMedium2;
                 table_little = worksheet.Tables.Add("TableLittle", "A61:E64", true);
                 table_little.BuiltInStyle = BuiltInTableStyleName.TableStyleMedium2;
@@ -565,7 +560,7 @@ namespace WindowsFormsApp1
                     {
                         if (cell.ValueType != CellValueType.Null && cell.Value.ToString() != "")
                         {
-                            if (String.Equals(cell.Value.ToString(), "TOTAL:".ToString()))
+                            if (String.Equals(cell.Value.ToString(), "TOTAL:"))
                                 return;
                             setLoad(cell, j, ref id, ref day, ref start_hour, ref stop_hour, ref curs_hours, ref pregatire_hours, ref recuperare_hours, ref final_hours, ref observatii);
                             ++j;
@@ -675,76 +670,6 @@ namespace WindowsFormsApp1
                     observatii = cell.Value.ToString();
                     break;
             }
-        }
-    }
-
-    public class WorkStuff
-    {
-        public string id;
-        public string day;
-        public string start_hour;
-        public string stop_hour;
-        public string curs_hours;
-        public string pregatire_hours;
-        public string recuperare_hours;
-        public string total_hours;
-        public string observatii;
-
-        public WorkStuff(string id, string day, string start_hour, string stop_hour, string curs_hours, string pregatire_hours, string recuperare_hours, string total_hours, string observatii)
-        {
-            this.id = id;
-            this.day = day;
-            this.start_hour = start_hour;
-            this.stop_hour = stop_hour;
-            this.curs_hours = curs_hours;
-            this.pregatire_hours = pregatire_hours;
-            this.recuperare_hours = recuperare_hours;
-            this.total_hours = total_hours;
-            this.observatii = observatii;
-        }
-    }
-
-    public static class Constants
-    {
-        public const int entries = 9;
-        public static int current_year = DateTime.Now.Year;
-        public static int current_month = DateTime.Now.Month;
-    }
-
-    internal static class CorrelationIdGenerator
-    {
-        private static readonly string _encode32Chars = "0123456789ABCDEFGHIJKLMNOPQRSTUV";
-
-        private static long _lastId = DateTime.UtcNow.Ticks;
-        public static string GetNextId() => GenerateId(Interlocked.Increment(ref _lastId));
-
-        private static unsafe string GenerateId(long id)
-        {
-            char* charBuffer = stackalloc char[13];
-
-            charBuffer[0] = _encode32Chars[(int)(id >> 60) & 31];
-            charBuffer[1] = _encode32Chars[(int)(id >> 55) & 31];
-            charBuffer[2] = _encode32Chars[(int)(id >> 50) & 31];
-            charBuffer[3] = _encode32Chars[(int)(id >> 45) & 31];
-            charBuffer[4] = _encode32Chars[(int)(id >> 40) & 31];
-            charBuffer[5] = _encode32Chars[(int)(id >> 35) & 31];
-            charBuffer[6] = _encode32Chars[(int)(id >> 30) & 31];
-            charBuffer[7] = _encode32Chars[(int)(id >> 25) & 31];
-            charBuffer[8] = _encode32Chars[(int)(id >> 20) & 31];
-            charBuffer[9] = _encode32Chars[(int)(id >> 15) & 31];
-            charBuffer[10] = _encode32Chars[(int)(id >> 10) & 31];
-            charBuffer[11] = _encode32Chars[(int)(id >> 5) & 31];
-            charBuffer[12] = _encode32Chars[(int)id & 31];
-
-            return new string(charBuffer, 0, 13);
-        }
-    }
-
-    public class HoursOutOfBounds : Exception
-    {
-        public HoursOutOfBounds()
-        {
-            MessageBox.Show("Too many hours in a day! Lower the starting time!");
         }
     }
 }

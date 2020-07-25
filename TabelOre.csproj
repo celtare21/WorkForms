@@ -99,12 +99,16 @@
     <Compile Include="ListForm\FormList.Designer.cs">
       <DependentUpon>FormList.cs</DependentUpon>
     </Compile>
+    <Compile Include="MainForm\Constants.cs" />
+    <Compile Include="MainForm\CorrelationIdGenerator.cs" />
     <Compile Include="MainForm\Form1.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="MainForm\Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="MainForm\HoursOutOfBounds.cs" />
+    <Compile Include="MainForm\WorkStuff.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="ListForm\FormList.resx">
