@@ -59,7 +59,7 @@ namespace WindowsFormsApp1
         {
             string day;
 
-            if (string.Compare(comboBox1.Text, "0") == 1 && string.Compare(comboBox2.Text, "0") == 1 && string.Compare(comboBox3.Text, "0") == 1)
+            if (string.Equals(comboBox1.Text, "0") && string.Equals(comboBox2.Text, "0") && string.Equals(comboBox3.Text, "0"))
             {
                 MessageBox.Show("No hours chosen!");
                 return;
@@ -215,7 +215,7 @@ namespace WindowsFormsApp1
             FormList window = new FormList(this);
 
             sortByDate();
-            window.Show();
+            window.ShowDialog();
         }
 
         private void hideCommon()
