@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Threading;
 using System.Windows.Forms;
-using WindowsFormsApp1.ListForm;
 using GemBox.Spreadsheet;
 using GemBox.Spreadsheet.Tables;
+using WindowsFormsApp1.ListForm;
 
 namespace WindowsFormsApp1
 {
@@ -437,6 +436,7 @@ namespace WindowsFormsApp1
                         result = DateTime.Parse("00:00");
                         break;
                 }
+
                 sum += (result - tmp).TotalHours;
             }
 
@@ -448,7 +448,9 @@ namespace WindowsFormsApp1
             int i, j;
 
             for (i = 0; i < total_rows - 1; i++)
+            {
                 for (j = 0; j < total_rows - i - 1; j++)
+                {
                     if (Convert.ToDateTime(elements[j].day, new CultureInfo("en-GB")) > Convert.ToDateTime(elements[j + 1].day, new CultureInfo("en-GB")))
                     {
                         WorkStuff tmp;
@@ -457,6 +459,8 @@ namespace WindowsFormsApp1
                         elements[j] = elements[j + 1];
                         elements[j + 1] = tmp;
                     }
+                }
+            }
         }
 
         private void loadPret(ExcelWorksheet worksheet)
@@ -567,14 +571,17 @@ namespace WindowsFormsApp1
                             write = true;
                         }
                     }
+
                     if (write)
                     {
                         elements.Add(new WorkStuff(id, day, start_hour, stop_hour, curs_hours, pregatire_hours, recuperare_hours, final_hours, observatii));
                         ++total_rows;
                         write = false;
                     }
+
                     j = 0;
                 }
+
                 first_run = false;
             }
         }
