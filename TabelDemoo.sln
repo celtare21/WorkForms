@@ -5,6 +5,8 @@ VisualStudioVersion = 16.0.29721.120
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TabelDemo", "TabelDemo.csproj", "{621F53C2-0AFF-4ABE-8970-647B2F79E83B}"
 EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "TabelDemoSetup", "..\TabelDemoSetup\TabelDemoSetup.vdproj", "{72182A9C-1733-4A0D-949B-EB17105DA02F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,8 @@ Global
 		{621F53C2-0AFF-4ABE-8970-647B2F79E83B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{621F53C2-0AFF-4ABE-8970-647B2F79E83B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{621F53C2-0AFF-4ABE-8970-647B2F79E83B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{72182A9C-1733-4A0D-949B-EB17105DA02F}.Debug|Any CPU.ActiveCfg = Debug
+		{72182A9C-1733-4A0D-949B-EB17105DA02F}.Release|Any CPU.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

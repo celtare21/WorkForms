@@ -64,6 +64,7 @@
             this.observatii_box = new System.Windows.Forms.TextBox();
             this.delete_all_button = new System.Windows.Forms.Button();
             this.list_button = new System.Windows.Forms.Button();
+            this.load_button = new System.Windows.Forms.Button();
             this.panel2.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -400,11 +401,22 @@
             this.list_button.UseVisualStyleBackColor = true;
             this.list_button.Click += new System.EventHandler(this.list_button_Click);
             // 
+            // load_button
+            // 
+            this.load_button.Location = new System.Drawing.Point(307, 325);
+            this.load_button.Name = "load_button";
+            this.load_button.Size = new System.Drawing.Size(75, 23);
+            this.load_button.TabIndex = 27;
+            this.load_button.Text = "Load";
+            this.load_button.UseVisualStyleBackColor = true;
+            this.load_button.Click += new System.EventHandler(this.load_button_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(543, 394);
+            this.Controls.Add(this.load_button);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.saturday);
             this.Controls.Add(this.friday);
@@ -479,6 +491,7 @@
         private System.Windows.Forms.TextBox observatii_box;
         private System.Windows.Forms.Button delete_all_button;
         private System.Windows.Forms.Button list_button;
+        private System.Windows.Forms.Button load_button;
     }
 }
 

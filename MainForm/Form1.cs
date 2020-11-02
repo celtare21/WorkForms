@@ -13,6 +13,7 @@ namespace WindowsFormsApp1
         private ExcelWorksheet worksheet;
         private ExcelFile loadedFile;
         public List<WorkStuff> elements;
+        private bool new_file = true;
         public int total_rows;
         private int last_total_rows;
         private double first_hour_entry;
@@ -50,11 +51,8 @@ namespace WindowsFormsApp1
 
             elements = new List<WorkStuff>();
 
-            delete_button.Enabled = false;
-            delete_all_button.Enabled = false;
             panel2.Hide();
-
-            loadOnStartup();
+            save_button.Enabled = false;
         }
 
         private void add_button_Click(object sender, EventArgs e)
@@ -107,6 +105,7 @@ namespace WindowsFormsApp1
 
             MessageBox.Show("New data added!");
 
+            save_button.Enabled = true;
             delete_button.Enabled = true;
             delete_all_button.Enabled = true;
         }
@@ -142,7 +141,26 @@ namespace WindowsFormsApp1
             MessageBox.Show("Elements removed.");
         }
 
-        private void loadOnStartup()
+        private void save_button_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog saveFileDialog;
+
+            saveFileDialog = new SaveFileDialog
+            {
+                Title = "Save File",
+
+                CheckPathExists = true,
+
+                FilterIndex = 2,
+                DefaultExt = "xlsx",
+                Filter = "xlsx files (*.xlsx)|*.xlsx",
+            };
+
+            if (saveFileDialog.ShowDialog() == DialogResult.OK)
+                saveTable(saveFileDialog.FileName);
+        }
+
+        private void load_button_Click(object sender, EventArgs e)
         {
             OpenFileDialog openFileDialog;
 
@@ -162,10 +180,9 @@ namespace WindowsFormsApp1
             };
 
             if (openFileDialog.ShowDialog() != DialogResult.OK)
-            {
-                MessageBox.Show("No file loaded! Exiting!");
-                Environment.Exit(0);
-            }
+                return;
+
+            new_file = false;
 
             loadedFile = ExcelFile.Load(openFileDialog.FileName);
 
@@ -174,28 +191,12 @@ namespace WindowsFormsApp1
             if (total_rows > 0)
                 last_total_rows = total_rows - 1;
 
+            MessageBox.Show("File loaded!");
+
+            load_button.Enabled = false;
             save_button.Enabled = true;
             delete_button.Enabled = true;
             delete_all_button.Enabled = true;
-        }
-
-        private void save_button_Click(object sender, EventArgs e)
-        {
-            SaveFileDialog saveFileDialog;
-
-            saveFileDialog = new SaveFileDialog
-            {
-                Title = "Save File",
-
-                CheckPathExists = true,
-
-                FilterIndex = 2,
-                DefaultExt = "xlsx",
-                Filter = "xlsx files (*.xlsx)|*.xlsx",
-            };
-
-            if (saveFileDialog.ShowDialog() == DialogResult.OK)
-                saveTable(saveFileDialog.FileName);
         }
 
         private void enter_pret_Click_1(object sender, EventArgs e)
@@ -224,6 +225,7 @@ namespace WindowsFormsApp1
             enter_pret.Hide();
             delete_button.Hide();
             delete_all_button.Hide();
+            load_button.Hide();
             ora_inceput_box.Hide();
             ora_inceput_text.Hide();
             observatii_box.Hide();
@@ -243,6 +245,7 @@ namespace WindowsFormsApp1
             enter_pret.Show();
             delete_button.Show();
             delete_all_button.Show();
+            load_button.Show();
             ora_inceput_box.Show();
             ora_inceput_text.Show();
             observatii_box.Show();
@@ -287,7 +290,6 @@ namespace WindowsFormsApp1
             worksheet.Cells[60, 4].Value = "VALOARE";
 
             worksheet.Cells[64, 3].Value = "TOTAL DEMO:";
-            worksheet.Cells[65, 3].Value = "TOTAL ORE + DEMO:";
         }
 
         private int addNewItemsOnDay(string day)
@@ -476,7 +478,12 @@ namespace WindowsFormsApp1
         {
             Table table_main, table_little;
             int i;
-            double total_ore = 0;
+
+            if (new_file)
+            {
+                loadedFile = new ExcelFile();
+                worksheet = loadedFile.Worksheets.Add("Demo");
+            }
 
             if (worksheet.Tables.Count > 0)
                 for (i = 0; i <= worksheet.Tables.Count; i++)
@@ -511,12 +518,6 @@ namespace WindowsFormsApp1
             worksheet.Cells[63, 4].Value = Convert.ToDouble(pret_pregatire.Text) * getTotalHoursDouble(3);
             worksheet.Cells[64, 4].Value = Convert.ToDouble(worksheet.Cells[61, 4].Value) + Convert.ToDouble(worksheet.Cells[62, 4].Value) + Convert.ToDouble(worksheet.Cells[63, 4].Value);
 
-            worksheet = loadedFile.Worksheets[0];
-            if (worksheet.Cells[64, 4].ValueType == CellValueType.Double || worksheet.Cells[64, 4].ValueType == CellValueType.Int)
-                total_ore = Convert.ToDouble(worksheet.Cells[64, 4].Value);
-            worksheet = loadedFile.Worksheets[1];
-            worksheet.Cells[65, 4].Value = Convert.ToDouble(worksheet.Cells[61, 4].Value) + Convert.ToDouble(worksheet.Cells[62, 4].Value) + Convert.ToDouble(worksheet.Cells[63, 4].Value) + total_ore;
-
             try
             {
                 loadedFile.Save(path);
@@ -541,7 +542,7 @@ namespace WindowsFormsApp1
 
             try
             {
-                worksheet = file.Worksheets[1];
+                worksheet = file.Worksheets[0];
             }
             catch (ArgumentOutOfRangeException)
             {
